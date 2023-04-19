@@ -1,0 +1,1 @@
+export const baseUrl = 'https://aldprototype.ca:3000/api/';

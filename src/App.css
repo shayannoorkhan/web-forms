@@ -1,0 +1,62 @@
+.App {
+  text-align: center;
+}
+
+body {
+  background: linear-gradient(30deg, #3f3ce5ca, #57ab5dca);
+  height: 100%;
+}
+
+p {
+  margin-bottom: 0px !important;
+}
+
+.form-page {
+  padding-top: 20px;
+  /* background: #fdcafd; */
+  /* background: #c7c6fda8; */
+  background: inherit;
+  background: linear-gradient(30deg, #3f3ce5ca, #57ab5dca);
+  display: flex;
+  /* align-items: center; */
+  justify-content: center;
+  height: 100vh;
+}
+
+.inner-form-div {
+  width: 40%;
+  text-align: start;
+  padding: 20px;
+  border-radius: 6px;
+  /* margin: 0px auto; */
+  height: fit-content;
+  background: white;
+}
+
+.form-button {
+  background: linear-gradient(30deg, #3f3ce5ca, #57ab5dca);
+  /* background: #fdcafd; */
+  /* border-color: #fdcafd; */
+  color: white;
+}
+
+.form-heading {
+  font-weight: 500;
+  font-size: 16px;
+}
+
+.box {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.form-detail {
+  width: 80%;
+  margin: 0px auto;
+  text-align: start;
+}
+
+.form-30 {
+  width: 30% !important;
+}
