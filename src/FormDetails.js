@@ -16,7 +16,7 @@ import Form4_6 from './generalinfopopups/Form4_6'
 import Form4_7 from './generalinfopopups/Form4_7'
 import Form5 from './generalinfopopups/Form5'
 import CommentBox from './CommentBox'
-import { baseUrl, shortUrl } from './helper'
+import { baseUrl} from './helper'
 
 const FormDetails = () => {
     const [tableData, setTableData] = useState()
@@ -69,7 +69,7 @@ const FormDetails = () => {
                 "DateofFeedback": "",
                 "activeCode": tableData?.['Active Code'],
                 "Form": "TOX",
-                "FormLink": `${shortUrl}/environment/${param.submissionNumber}?shmode=1`,
+                "FormLink": `${baseUrl.split(':3000')[0]}/environment/${param.submissionNumber}?shmode=1`,
                 "SectionHeadName": tableData?.['ALD Approved By'],
                 "EvaluatorName": tableData?.Evaluator,
                 "updated": moment().format('YYYY-MM-DD'),

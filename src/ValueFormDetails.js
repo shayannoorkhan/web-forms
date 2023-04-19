@@ -7,7 +7,7 @@ import Form4 from './valuePopups/Form4'
 import Form2 from './valuePopups/Form2'
 import Form3 from './valuePopups/Form3'
 import CommentBox from './CommentBox'
-import { baseUrl, shortUrl } from './helper'
+import { baseUrl} from './helper'
 
 const ValueFormDetails = () => {
     const [tableData, setTableData] = useState()
@@ -41,7 +41,7 @@ const ValueFormDetails = () => {
                 "DateofFeedback": "",
                 "activeCode": tableData?.['Active Code'],
                 "Form": "TOX",
-                "FormLink": `${shortUrl}/environment/${param.submissionNumber}?shmode=1`,
+                "FormLink": `${baseUrl.split(':3000')[0]}/environment/${param.submissionNumber}?shmode=1`,
                 "SectionHeadName": tableData?.['ALD Approved By'],
                 "EvaluatorName": tableData?.Evaluator,
                 "updated": moment().format('YYYY-MM-DD'),

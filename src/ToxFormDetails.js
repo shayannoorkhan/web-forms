@@ -17,7 +17,7 @@ import Form11 from './toxPopups/Form11'
 import Form6 from './toxPopups/Form6'
 import Form7 from './toxPopups/Form7'
 import CommentBox from './CommentBox'
-import { baseUrl, shortUrl } from './helper'
+import { baseUrl} from './helper'
 
 const ToxFormDetails = () => {
     const [tableData, setTableData] = useState()
@@ -71,7 +71,7 @@ const ToxFormDetails = () => {
                 "DateofFeedback": "",
                 "activeCode": tableData?.['Active Code'],
                 "Form": "TOX",
-                "FormLink": `${shortUrl}/environment/${param.submissionNumber}?shmode=1`,
+                "FormLink": `${baseUrl.split(':3000')[0]}/environment/${param.submissionNumber}?shmode=1`,
                 "SectionHeadName": tableData?.['ALD Approved By'],
                 "EvaluatorName": tableData?.Evaluator,
                 "updated": moment().format('YYYY-MM-DD'),
