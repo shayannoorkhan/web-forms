@@ -16,6 +16,7 @@ import Form4_6 from './generalinfopopups/Form4_6'
 import Form4_7 from './generalinfopopups/Form4_7'
 import Form5 from './generalinfopopups/Form5'
 import CommentBox from './CommentBox'
+import { baseUrl, shortUrl } from './helper'
 
 const FormDetails = () => {
     const [tableData, setTableData] = useState()
@@ -51,7 +52,7 @@ const FormDetails = () => {
     const [comments, setComments] = useState()
 
     function getComments() {
-        axios.get(`https://aldprototype.ca:3000/api/sectionheadfeedback/${param.submissionNumber}/General%20Info`)
+        axios.get(`${baseUrl}sectionheadfeedback/${param.submissionNumber}/General%20Info`)
             .then((resp) => {
                 setComments(resp.data[0])
             }).catch((err) => {
@@ -68,7 +69,7 @@ const FormDetails = () => {
                 "DateofFeedback": "",
                 "activeCode": tableData?.['Active Code'],
                 "Form": "TOX",
-                "FormLink": `https://aldprototype.ca/environment/${param.submissionNumber}?shmode=1`,
+                "FormLink": `${shortUrl}/environment/${param.submissionNumber}?shmode=1`,
                 "SectionHeadName": tableData?.['ALD Approved By'],
                 "EvaluatorName": tableData?.Evaluator,
                 "updated": moment().format('YYYY-MM-DD'),
@@ -82,7 +83,7 @@ const FormDetails = () => {
 
     function handleApproval() {
         setLoading(true)
-        axios.put(`https://aldprototype.ca:3000/api/sectionheadfeedback/${approvalBody.id}`, approvalBody)
+        axios.put(`${baseUrl}sectionheadfeedback/${approvalBody.id}`, approvalBody)
             .then((resp) => {
                 setLoading(false)
                 message.success('Requested for approval')
@@ -97,7 +98,7 @@ const FormDetails = () => {
         tableData['ALD created on'] = moment(tableData['ALD created on']).format('YYYY-MM-DD')
         tableData['Initiation Date'] = moment(tableData['Initiation Date']).format('YYYY-MM-DD')
         setLoading(true)
-        axios.put(`https://aldprototype.ca:3000/api/data/${param.submissionNumber}`, tableData)
+        axios.put(`${baseUrl}data/${param.submissionNumber}`, tableData)
             .then((resp) => {
                 getFormData()
                 setLoading(false)
@@ -110,7 +111,7 @@ const FormDetails = () => {
     }
 
     function getFormData() {
-        axios.get(`https://aldprototype.ca:3000/api/value/${param.submissionNumber}`)
+        axios.get(`${baseUrl}value/${param.submissionNumber}`)
             .then((resp) => {
                 const filterGenInfoForms = resp.data?.filter(item => item['ALD Report to Generate'] === 'General Info')
                 setTableData(filterGenInfoForms[0])
@@ -118,14 +119,14 @@ const FormDetails = () => {
     }
 
     function getForm2Data() {
-        axios.get(`https://aldprototype.ca:3000/api/geninfosection2data/${param.submissionNumber}`)
+        axios.get(`${baseUrl}geninfosection2data/${param.submissionNumber}`)
             .then((resp) => {
                 setForm2Data(resp.data)
             })
     }
 
     function deleteForm2Data(id) {
-        axios.delete(`https://aldprototype.ca:3000/api/geninfosection2data/${id}`)
+        axios.delete(`${baseUrl}geninfosection2data/${id}`)
             .then((resp) => {
                 getForm2Data()
                 message.success('Record Deleted')
@@ -133,7 +134,7 @@ const FormDetails = () => {
     }
 
     function getForm3Data() {
-        axios.get(`https://aldprototype.ca:3000/api/geninfosection3data/${param.submissionNumber}`)
+        axios.get(`${baseUrl}geninfosection3data/${param.submissionNumber}`)
             .then((resp) => {
                 const filterForm3 = resp.data?.filter(item => item.Subsection_Name === "Initial TGAI registration")
                 setForm3Data(filterForm3)
@@ -145,7 +146,7 @@ const FormDetails = () => {
     }
 
     function deleteForm3Data(id) {
-        axios.delete(`https://aldprototype.ca:3000/api/geninfosection3data/${id}`)
+        axios.delete(`${baseUrl}geninfosection3data/${id}`)
             .then((resp) => {
                 getForm3Data()
                 message.success('Record Deleted')
@@ -153,14 +154,14 @@ const FormDetails = () => {
     }
 
     function getForm3_4Data() {
-        axios.get(`https://aldprototype.ca:3000/api/geninfotgairegistrantslist/${param.submissionNumber}`)
+        axios.get(`${baseUrl}geninfotgairegistrantslist/${param.submissionNumber}`)
             .then((resp) => {
                 setForm3_4Data(resp.data)
             })
     }
 
     function deleteForm3_4Data(id) {
-        axios.delete(`https://aldprototype.ca:3000/api/geninfotgairegistrantslist/${id}`)
+        axios.delete(`${baseUrl}geninfotgairegistrantslist/${id}`)
             .then((resp) => {
                 getForm3_4Data()
                 message.success('Record Deleted')
@@ -168,14 +169,14 @@ const FormDetails = () => {
     }
 
     function getForm3_5Data() {
-        axios.get(`https://aldprototype.ca:3000/api/geninforegulatorstable/${param.submissionNumber}`)
+        axios.get(`${baseUrl}geninforegulatorstable/${param.submissionNumber}`)
             .then((resp) => {
                 setForm3_5Data(resp.data)
             })
     }
 
     function deleteForm3_5Data(id) {
-        axios.delete(`https://aldprototype.ca:3000/api/geninforegulatorstable/${id}`)
+        axios.delete(`${baseUrl}geninforegulatorstable/${id}`)
             .then((resp) => {
                 getForm3_5Data()
                 message.success('Record Deleted')
@@ -183,14 +184,14 @@ const FormDetails = () => {
     }
 
     function getForm4Data() {
-        axios.get(`https://aldprototype.ca:3000/api/geninfobackgrounddata/${param.submissionNumber}`)
+        axios.get(`${baseUrl}geninfobackgrounddata/${param.submissionNumber}`)
             .then((resp) => {
                 setForm4Data(resp.data)
             })
     }
 
     function deleteForm4Data(id) {
-        axios.delete(`https://aldprototype.ca:3000/api/geninfobackgrounddata/${id}`)
+        axios.delete(`${baseUrl}geninfobackgrounddata/${id}`)
             .then((resp) => {
                 getForm4Data()
                 message.success('Record Deleted')
@@ -198,14 +199,14 @@ const FormDetails = () => {
     }
 
     function getForm4_4Data() {
-        axios.get(`https://aldprototype.ca:3000/api/geninfoepmarketingdata/${param.submissionNumber}`)
+        axios.get(`${baseUrl}geninfoepmarketingdata/${param.submissionNumber}`)
             .then((resp) => {
                 setForm4_4Data(resp.data)
             })
     }
 
     function deleteForm4_4Data(id) {
-        axios.delete(`https://aldprototype.ca:3000/api/geninfoepmarketingdata/${id}`)
+        axios.delete(`${baseUrl}geninfoepmarketingdata/${id}`)
             .then((resp) => {
                 getForm4_4Data()
                 message.success('Record Deleted')
@@ -213,14 +214,14 @@ const FormDetails = () => {
     }
 
     function getForm4_5Data() {
-        axios.get(`https://aldprototype.ca:3000/api/geninforoebcomplianceaudittrail/${param.submissionNumber}`)
+        axios.get(`${baseUrl}geninforoebcomplianceaudittrail/${param.submissionNumber}`)
             .then((resp) => {
                 setForm4_5Data(resp.data)
             })
     }
 
     function deleteForm4_5Data(id) {
-        axios.delete(`https://aldprototype.ca:3000/api/geninforoebcomplianceaudittrail/${id}`)
+        axios.delete(`${baseUrl}geninforoebcomplianceaudittrail/${id}`)
             .then((resp) => {
                 getForm4_5Data()
                 message.success('Record Deleted')
@@ -228,14 +229,14 @@ const FormDetails = () => {
     }
 
     function getForm4_6Data() {
-        axios.get(`https://aldprototype.ca:3000/api/geninfoinfolinetable/${param.submissionNumber}`)
+        axios.get(`${baseUrl}geninfoinfolinetable/${param.submissionNumber}`)
             .then((resp) => {
                 setForm4_6Data(resp.data)
             })
     }
 
     function deleteForm4_6Data(id) {
-        axios.delete(`https://aldprototype.ca:3000/api/geninfoinfolinetable/${id}`)
+        axios.delete(`${baseUrl}geninfoinfolinetable/${id}`)
             .then((resp) => {
                 getForm4_6Data()
                 message.success('Record Deleted')
@@ -243,14 +244,14 @@ const FormDetails = () => {
     }
 
     function getForm4_7Data() {
-        axios.get(`https://aldprototype.ca:3000/api/geninfotgaiepunfulfilledconditionstable/${param.submissionNumber}`)
+        axios.get(`${baseUrl}geninfotgaiepunfulfilledconditionstable/${param.submissionNumber}`)
             .then((resp) => {
                 setForm4_7Data(resp.data)
             })
     }
 
     function deleteForm4_7Data(id) {
-        axios.delete(`https://aldprototype.ca:3000/api/geninfotgaiepunfulfilledconditionstable/${id}`)
+        axios.delete(`${baseUrl}geninfotgaiepunfulfilledconditionstable/${id}`)
             .then((resp) => {
                 getForm4_7Data()
                 message.success('Record Deleted')
@@ -258,14 +259,14 @@ const FormDetails = () => {
     }
 
     function getForm5Data() {
-        axios.get(`https://aldprototype.ca:3000/api/geninfoscienceteamaldstable/${param.submissionNumber}`)
+        axios.get(`${baseUrl}geninfoscienceteamaldstable/${param.submissionNumber}`)
             .then((resp) => {
                 setForm5Data(resp.data)
             })
     }
 
     function deleteForm5Data(id) {
-        axios.delete(`https://aldprototype.ca:3000/api/geninfoscienceteamaldstable/${id}`)
+        axios.delete(`${baseUrl}geninfoscienceteamaldstable/${id}`)
             .then((resp) => {
                 getForm5Data()
                 message.success('Record Deleted')

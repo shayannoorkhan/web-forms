@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Modal, Select, Input, Button, message } from 'antd'
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import { baseUrl } from '../helper';
 
 const GeneralInfo2 = ({ open, setOpen, data, getFormData }) => {
     const param = useParams()
@@ -23,7 +24,7 @@ const GeneralInfo2 = ({ open, setOpen, data, getFormData }) => {
     function addRecord() {
         const obj = { ...formData, 'Submission_Number': param.submissionNumber }
         setLoading(true)
-        axios.post(`https://aldprototype.ca:3000/api/geninfosection2data`, obj)
+        axios.post(`${baseUrl}geninfosection2data`, obj)
             .then((resp) => {
                 message.success('Record Added')
                 getFormData()
@@ -35,7 +36,7 @@ const GeneralInfo2 = ({ open, setOpen, data, getFormData }) => {
 
     function edit() {
         setLoading(true)
-        axios.put(`https://aldprototype.ca:3000/api/geninfosection2data/${formData?.row_id}`, formData)
+        axios.put(`${baseUrl}geninfosection2data/${formData?.row_id}`, formData)
             .then((resp) => {
                 message.success('Record Updated')
                 getFormData()

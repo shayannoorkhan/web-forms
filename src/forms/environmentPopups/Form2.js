@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Modal, Select, Input, Button, message, DatePicker } from 'antd'
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import { baseUrl } from '../../helper';
 
 const Form2 = ({ open, setOpen, data, getFormData }) => {
     const param = useParams()
@@ -27,7 +28,7 @@ const Form2 = ({ open, setOpen, data, getFormData }) => {
     function addRecord() {
         const obj = { ...formData, 'Submission_Number': param.submissionNumber }
         setLoading(true)
-        axios.post(`https://aldprototype.ca:3000/api/keydocsdata`, obj)
+        axios.post(`${baseUrl}keydocsdata`, obj)
             .then((resp) => {
                 message.success('Record Added')
                 getFormData()
@@ -39,7 +40,7 @@ const Form2 = ({ open, setOpen, data, getFormData }) => {
 
     function edit() {
         setLoading(true)
-        axios.put(`https://aldprototype.ca:3000/api/keydocsdata/${formData?.id}`, formData)
+        axios.put(`${baseUrl}keydocsdata/${formData?.id}`, formData)
             .then((resp) => {
                 message.success('Record Updated')
                 getFormData()

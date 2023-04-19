@@ -17,6 +17,7 @@ import Form11 from './toxPopups/Form11'
 import Form6 from './toxPopups/Form6'
 import Form7 from './toxPopups/Form7'
 import CommentBox from './CommentBox'
+import { baseUrl, shortUrl } from './helper'
 
 const ToxFormDetails = () => {
     const [tableData, setTableData] = useState()
@@ -53,7 +54,7 @@ const ToxFormDetails = () => {
     const [comments, setComments] = useState()
 
     function getComments() {
-        axios.get(`https://aldprototype.ca:3000/api/sectionheadfeedback/${param.submissionNumber}/TOX`)
+        axios.get(`${baseUrl}sectionheadfeedback/${param.submissionNumber}/TOX`)
             .then((resp) => {
                 setComments(resp.data[0])
             }).catch((err) => {
@@ -70,7 +71,7 @@ const ToxFormDetails = () => {
                 "DateofFeedback": "",
                 "activeCode": tableData?.['Active Code'],
                 "Form": "TOX",
-                "FormLink": `https://aldprototype.ca/environment/${param.submissionNumber}?shmode=1`,
+                "FormLink": `${shortUrl}/environment/${param.submissionNumber}?shmode=1`,
                 "SectionHeadName": tableData?.['ALD Approved By'],
                 "EvaluatorName": tableData?.Evaluator,
                 "updated": moment().format('YYYY-MM-DD'),
@@ -86,7 +87,7 @@ const ToxFormDetails = () => {
         tableData['ALD created on'] = moment(tableData['ALD created on']).format('YYYY-MM-DD')
         tableData['Initiation Date'] = moment(tableData['Initiation Date']).format('YYYY-MM-DD')
         setLoading(true)
-        axios.put(`https://aldprototype.ca:3000/api/data/${param.submissionNumber}`, tableData)
+        axios.put(`${baseUrl}data/${param.submissionNumber}`, tableData)
             .then((resp) => {
                 getFormData()
                 setLoading(false)
@@ -99,7 +100,7 @@ const ToxFormDetails = () => {
     }
 
     function getFormData() {
-        axios.get(`https://aldprototype.ca:3000/api/value/${param.submissionNumber}`)
+        axios.get(`${baseUrl}value/${param.submissionNumber}`)
             .then((resp) => {
                 const filterGenInfoForms = resp.data?.filter(item => item['ALD Report to Generate'] === 'TOX')
                 setTableData(filterGenInfoForms[0])
@@ -107,14 +108,14 @@ const ToxFormDetails = () => {
     }
 
     function getForm2Data() {
-        axios.get(`https://aldprototype.ca:3000/api/toxsection21summarytable/${param.submissionNumber}`)
+        axios.get(`${baseUrl}toxsection21summarytable/${param.submissionNumber}`)
             .then((resp) => {
                 setForm2Data(resp.data)
             })
     }
 
     function deleteForm2Data(id) {
-        axios.delete(`https://aldprototype.ca:3000/api/toxsection21summarytable/${id}`)
+        axios.delete(`${baseUrl}toxsection21summarytable/${id}`)
             .then((resp) => {
                 getForm2Data()
                 message.success('Record Deleted')
@@ -122,14 +123,14 @@ const ToxFormDetails = () => {
     }
 
     function getForm22Data() {
-        axios.get(`https://aldprototype.ca:3000/api/toxsections22232434data/${param.submissionNumber}`)
+        axios.get(`${baseUrl}toxsections22232434data/${param.submissionNumber}`)
             .then((resp) => {
                 setForm22Data(resp.data)
             })
     }
 
     function deleteForm22Data(id) {
-        axios.delete(`https://aldprototype.ca:3000/api/toxsections22232434data/${id}`)
+        axios.delete(`${baseUrl}toxsections22232434data/${id}`)
             .then((resp) => {
                 getForm22Data()
                 message.success('Record Deleted')
@@ -137,14 +138,14 @@ const ToxFormDetails = () => {
     }
 
     function getForm23Data() {
-        axios.get(`https://aldprototype.ca:3000/api/toxsections22232434data/${param.submissionNumber}`)
+        axios.get(`${baseUrl}toxsections22232434data/${param.submissionNumber}`)
             .then((resp) => {
                 setForm23Data(resp.data)
             })
     }
 
     function deleteForm23Data(id) {
-        axios.delete(`https://aldprototype.ca:3000/api/toxsections22232434data/${id}`)
+        axios.delete(`${baseUrl}toxsections22232434data/${id}`)
             .then((resp) => {
                 getForm23Data()
                 message.success('Record Deleted')
@@ -152,14 +153,14 @@ const ToxFormDetails = () => {
     }
 
     function getForm24Data() {
-        axios.get(`https://aldprototype.ca:3000/api/toxsections22232434data/${param.submissionNumber}`)
+        axios.get(`${baseUrl}toxsections22232434data/${param.submissionNumber}`)
             .then((resp) => {
                 setForm24Data(resp.data)
             })
     }
 
     function deleteForm24Data(id) {
-        axios.delete(`https://aldprototype.ca:3000/api/toxsections22232434data/${id}`)
+        axios.delete(`${baseUrl}toxsections22232434data/${id}`)
             .then((resp) => {
                 getForm24Data()
                 message.success('Record Deleted')
@@ -168,14 +169,14 @@ const ToxFormDetails = () => {
 
 
     function getForm3Data() {
-        axios.get(`https://aldprototype.ca:3000/api/toxsections22232434data/${param.submissionNumber}`)
+        axios.get(`${baseUrl}toxsections22232434data/${param.submissionNumber}`)
             .then((resp) => {
                 setForm3Data(resp.data)
             })
     }
 
     function deleteForm3Data(id) {
-        axios.delete(`https://aldprototype.ca:3000/api/toxsections22232434data/${id}`)
+        axios.delete(`${baseUrl}toxsections22232434data/${id}`)
             .then((resp) => {
                 getForm3Data()
                 message.success('Record Deleted')
@@ -183,14 +184,14 @@ const ToxFormDetails = () => {
     }
 
     function getForm4Data() {
-        axios.get(`https://aldprototype.ca:3000/api/toxsections22232434data/${param.submissionNumber}`)
+        axios.get(`${baseUrl}toxsections22232434data/${param.submissionNumber}`)
             .then((resp) => {
                 setForm4Data(resp.data)
             })
     }
 
     function deleteForm4Data(id) {
-        axios.delete(`https://aldprototype.ca:3000/api/toxsections22232434data/${id}`)
+        axios.delete(`${baseUrl}toxsections22232434data/${id}`)
             .then((resp) => {
                 getForm4Data()
                 message.success('Record Deleted')
@@ -199,14 +200,14 @@ const ToxFormDetails = () => {
 
 
     function getForm5Data() {
-        axios.get(`https://aldprototype.ca:3000/api/toxsection5data/${param.submissionNumber}`)
+        axios.get(`${baseUrl}toxsection5data/${param.submissionNumber}`)
             .then((resp) => {
                 setForm5Data(resp.data)
             })
     }
 
     function deleteForm5Data(id) {
-        axios.delete(`https://aldprototype.ca:3000/api/toxsection5data/${id}`)
+        axios.delete(`${baseUrl}toxsection5data/${id}`)
             .then((resp) => {
                 getForm5Data()
                 message.success('Record Deleted')
@@ -214,14 +215,14 @@ const ToxFormDetails = () => {
     }
 
     function getForm6Data() {
-        axios.get(`https://aldprototype.ca:3000/api/toxsection6data/${param.submissionNumber}`)
+        axios.get(`${baseUrl}toxsection6data/${param.submissionNumber}`)
             .then((resp) => {
                 setForm6Data(resp.data)
             })
     }
 
     function deleteForm6Data(id) {
-        axios.delete(`https://aldprototype.ca:3000/api/toxsection6data/${id}`)
+        axios.delete(`${baseUrl}toxsection6data/${id}`)
             .then((resp) => {
                 getForm6Data()
                 message.success('Record Deleted')
@@ -229,14 +230,14 @@ const ToxFormDetails = () => {
     }
 
     function getForm7Data() {
-        axios.get(`https://aldprototype.ca:3000/api/toxsection7data/${param.submissionNumber}`)
+        axios.get(`${baseUrl}toxsection7data/${param.submissionNumber}`)
             .then((resp) => {
                 setForm7Data(resp.data)
             })
     }
 
     function deleteForm7Data(id) {
-        axios.delete(`https://aldprototype.ca:3000/api/toxsection7data/${id}`)
+        axios.delete(`${baseUrl}toxsection7data/${id}`)
             .then((resp) => {
                 getForm7Data()
                 message.success('Record Deleted')
@@ -245,14 +246,14 @@ const ToxFormDetails = () => {
 
 
     function getForm8Data() {
-        axios.get(`https://aldprototype.ca:3000/api/toxsection8data/${param.submissionNumber}`)
+        axios.get(`${baseUrl}toxsection8data/${param.submissionNumber}`)
             .then((resp) => {
                 setForm8Data(resp.data)
             })
     }
 
     function deleteForm8Data(id) {
-        axios.delete(`https://aldprototype.ca:3000/api/toxsection8data/${id}`)
+        axios.delete(`${baseUrl}toxsection8data/${id}`)
             .then((resp) => {
                 getForm8Data()
                 message.success('Record Deleted')
@@ -260,14 +261,14 @@ const ToxFormDetails = () => {
     }
 
     function getForm9Data() {
-        axios.get(`https://aldprototype.ca:3000/api/toxsection9data/${param.submissionNumber}`)
+        axios.get(`${baseUrl}toxsection9data/${param.submissionNumber}`)
             .then((resp) => {
                 setForm9Data(resp.data)
             })
     }
 
     function deleteForm9Data(id) {
-        axios.delete(`https://aldprototype.ca:3000/api/toxsection9data/${id}`)
+        axios.delete(`${baseUrl}toxsection9data/${id}`)
             .then((resp) => {
                 getForm9Data()
                 message.success('Record Deleted')
@@ -275,14 +276,14 @@ const ToxFormDetails = () => {
     }
 
     function getForm10Data() {
-        axios.get(`https://aldprototype.ca:3000/api/toxsection10data/${param.submissionNumber}`)
+        axios.get(`${baseUrl}toxsection10data/${param.submissionNumber}`)
             .then((resp) => {
                 setForm10Data(resp.data)
             })
     }
 
     function deleteForm10Data(id) {
-        axios.delete(`https://aldprototype.ca:3000/api/toxsection10data/${id}`)
+        axios.delete(`${baseUrl}toxsection10data/${id}`)
             .then((resp) => {
                 getForm10Data()
                 message.success('Record Deleted')
@@ -290,14 +291,14 @@ const ToxFormDetails = () => {
     }
 
     function getForm11Data() {
-        axios.get(`https://aldprototype.ca:3000/api/toxsection11data/${param.submissionNumber}`)
+        axios.get(`${baseUrl}toxsection11data/${param.submissionNumber}`)
             .then((resp) => {
                 setForm11Data(resp.data)
             })
     }
 
     function deleteForm11Data(id) {
-        axios.delete(`https://aldprototype.ca:3000/api/toxsection11data/${id}`)
+        axios.delete(`${baseUrl}toxsection11data/${id}`)
             .then((resp) => {
                 getForm11Data()
                 message.success('Record Deleted')
@@ -337,7 +338,7 @@ const ToxFormDetails = () => {
 
     function handleApproval() {
         setLoading(true)
-        axios.put(`https://aldprototype.ca:3000/api/sectionheadfeedback/${approvalBody.id}`, approvalBody)
+        axios.put(`${baseUrl}sectionheadfeedback/${approvalBody.id}`, approvalBody)
             .then((resp) => {
                 setLoading(false)
                 message.success('Requested for approval')

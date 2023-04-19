@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Modal, Select, Input, Button, message, DatePicker, Checkbox } from 'antd'
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import { baseUrl } from '../helper';
 
 const Form7 = ({ open, setOpen, data, getFormData }) => {
     const param = useParams()
@@ -33,7 +34,7 @@ const Form7 = ({ open, setOpen, data, getFormData }) => {
     function addRecord() {
         const obj = { ...formData, 'Submission_Number': param.submissionNumber }
         setLoading(true)
-        axios.post(`https://aldprototype.ca:3000/api/toxsection7data`, obj)
+        axios.post(`${baseUrl}toxsection7data`, obj)
             .then((resp) => {
                 message.success('Record Added')
                 setLoading(false)
@@ -45,7 +46,7 @@ const Form7 = ({ open, setOpen, data, getFormData }) => {
 
     function edit() {
         setLoading(true)
-        axios.put(`https://aldprototype.ca:3000/api/toxsection7data/${formData?.row_id}`, formData)
+        axios.put(`${baseUrl}toxsection7data/${formData?.row_id}`, formData)
             .then((resp) => {
                 message.success('Record Updated')
                 setLoading(false)

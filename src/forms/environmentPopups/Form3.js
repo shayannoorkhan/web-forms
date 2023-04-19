@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Modal, Select, Input, Button, message, DatePicker } from 'antd'
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import { baseUrl } from '../../helper';
 
 const Form3 = ({ open, setOpen, data, getFormData, sectionName, sectionNumber }) => {
     const param = useParams()
@@ -23,7 +24,7 @@ const Form3 = ({ open, setOpen, data, getFormData, sectionName, sectionNumber })
     function addRecord() {
         const obj = { ...formData, 'Submission_Number': param.submissionNumber, 'Section_Name': sectionName, 'Section_Number': sectionNumber }
         setLoading(true)
-        axios.post(`https://aldprototype.ca:3000/api/section3to9data`, obj)
+        axios.post(`${baseUrl}section3to9data`, obj)
             .then((resp) => {
                 message.success('Record Added')
                 setLoading(false)
@@ -36,7 +37,7 @@ const Form3 = ({ open, setOpen, data, getFormData, sectionName, sectionNumber })
     function edit() {
         const obj = { ...formData, 'Submission_Number': param.submissionNumber, 'Section_Name': formData?.['Section name'], 'Section_Number': formData?.['Section number'] }
         setLoading(true)
-        axios.put(`https://aldprototype.ca:3000/api/section3to9data/${formData?.row_id}`, obj)
+        axios.put(`${baseUrl}section3to9data/${formData?.row_id}`, obj)
             .then((resp) => {
                 message.success('Record Updated')
                 setLoading(false)

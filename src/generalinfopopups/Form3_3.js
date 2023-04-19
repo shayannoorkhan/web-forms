@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Modal, Select, Input, Button, message, DatePicker } from 'antd'
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import { baseUrl } from '../helper';
 
 const Form3_3 = ({ open, setOpen, data, getFormData }) => {
     const param = useParams()
@@ -39,7 +40,7 @@ const Form3_3 = ({ open, setOpen, data, getFormData }) => {
             'Subsection_Name': "Completed (i-Done) or Open Special Review"
         }
         setLoading(true)
-        axios.post(`https://aldprototype.ca:3000/api/geninfosection3data`, obj)
+        axios.post(`${baseUrl}geninfosection3data`, obj)
             .then((resp) => {
                 message.success('Record Added')
                 getFormData()
@@ -51,7 +52,7 @@ const Form3_3 = ({ open, setOpen, data, getFormData }) => {
 
     function edit() {
         setLoading(true)
-        axios.put(`https://aldprototype.ca:3000/api/geninfosection3data/${formData?.row_id}`, formData)
+        axios.put(`${baseUrl}geninfosection3data/${formData?.row_id}`, formData)
             .then((resp) => {
                 message.success('Record Updated')
                 getFormData()

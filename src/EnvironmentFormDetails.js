@@ -7,6 +7,7 @@ import Form3 from './forms/environmentPopups/Form3'
 import Form2 from './forms/environmentPopups/Form2'
 import { tab } from '@testing-library/user-event/dist/tab'
 import CommentBox from './CommentBox'
+import { baseUrl, shortUrl } from './helper'
 
 const EnvironmentFormDetails = () => {
     const [tableData, setTableData] = useState()
@@ -28,7 +29,7 @@ const EnvironmentFormDetails = () => {
     const [comments, setComments] = useState()
 
     function getComments() {
-        axios.get(`https://aldprototype.ca:3000/api/sectionheadfeedback/${param.submissionNumber}/Environment`)
+        axios.get(`${baseUrl}sectionheadfeedback/${param.submissionNumber}/Environment`)
             .then((resp) => {
                 setComments(resp.data[0])
             }).catch((err) => {
@@ -45,7 +46,7 @@ const EnvironmentFormDetails = () => {
                 "DateofFeedback": "",
                 "activeCode": tableData?.['Active Code'],
                 "Form": "TOX",
-                "FormLink": `https://aldprototype.ca/environment/${param.submissionNumber}?shmode=1`,
+                "FormLink": `${shortUrl}/environment/${param.submissionNumber}?shmode=1`,
                 "SectionHeadName": tableData?.['ALD Approved By'],
                 "EvaluatorName": tableData?.Evaluator,
                 "updated": moment().format('YYYY-MM-DD'),
@@ -61,7 +62,7 @@ const EnvironmentFormDetails = () => {
         tableData['ALD created on'] = moment(tableData['ALD created on']).format('YYYY-MM-DD')
         tableData['Initiation Date'] = moment(tableData['Initiation Date']).format('YYYY-MM-DD')
         setLoading(true)
-        axios.put(`https://aldprototype.ca:3000/api/data/${param.submissionNumber}`, tableData)
+        axios.put(`${baseUrl}data/${param.submissionNumber}`, tableData)
             .then((resp) => {
                 getFormData()
                 setLoading(false)
@@ -74,7 +75,7 @@ const EnvironmentFormDetails = () => {
     }
 
     function getFormData() {
-        axios.get(`https://aldprototype.ca:3000/api/value/${param.submissionNumber}`)
+        axios.get(`${baseUrl}value/${param.submissionNumber}`)
             .then((resp) => {
                 const filterGenInfoForms = resp.data?.filter(item => item['ALD Report to Generate'] === 'Value')
                 setTableData(filterGenInfoForms[0])
@@ -82,14 +83,14 @@ const EnvironmentFormDetails = () => {
     }
 
     function getForm2Data() {
-        axios.get(`https://aldprototype.ca:3000/api/keydocsdata/${param.submissionNumber}`)
+        axios.get(`${baseUrl}keydocsdata/${param.submissionNumber}`)
             .then((resp) => {
                 setForm2Data(resp.data)
             })
     }
 
     function deleteForm2Data(id) {
-        axios.delete(`https://aldprototype.ca:3000/api/keydocsdata/${id}`)
+        axios.delete(`${baseUrl}keydocsdata/${id}`)
             .then((resp) => {
                 getForm2Data()
                 message.success('Record Deleted')
@@ -97,14 +98,14 @@ const EnvironmentFormDetails = () => {
     }
 
     function getForm3Data() {
-        axios.get(`https://aldprototype.ca:3000/api/section3to9data/${param.submissionNumber}`)
+        axios.get(`${baseUrl}section3to9data/${param.submissionNumber}`)
             .then((resp) => {
                 setForm3Data(resp.data)
             })
     }
 
     function deleteForm3Data(id) {
-        axios.delete(`https://aldprototype.ca:3000/api/section3to9data/${id}`)
+        axios.delete(`${baseUrl}section3to9data/${id}`)
             .then((resp) => {
                 getForm3Data()
                 message.success('Record Deleted')
@@ -136,7 +137,7 @@ const EnvironmentFormDetails = () => {
 
     function handleApproval() {
         setLoading(true)
-        axios.put(`https://aldprototype.ca:3000/api/sectionheadfeedback/10`, approvalBody)
+        axios.put(`${baseUrl}sectionheadfeedback/10`, approvalBody)
             .then((resp) => {
                 setLoading(false)
                 message.success('Requested for approval')
