@@ -86,6 +86,9 @@ const ToxFormDetails = () => {
         tableData['ALD Last Updated on'] = moment(tableData['ALD Last Updated on']).format('YYYY-MM-DD')
         tableData['ALD created on'] = moment(tableData['ALD created on']).format('YYYY-MM-DD')
         tableData['Initiation Date'] = moment(tableData['Initiation Date']).format('YYYY-MM-DD')
+        tableData['SMC BN2 Date'] = moment(tableData['SMC BN2 Date']).format('YYYY-MM-DD')
+        tableData['SMC BN1 Date'] = moment(tableData['SMC BN1 Date']).format('YYYY-MM-DD')
+        tableData['Next Assessment Date'] = moment(tableData['Next Assessment Date']).format('YYYY-MM-DD')
         setLoading(true)
         axios.put(`${baseUrl}data/${param.submissionNumber}`, tableData)
             .then((resp) => {

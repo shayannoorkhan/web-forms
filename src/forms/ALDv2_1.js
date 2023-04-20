@@ -122,7 +122,7 @@ const ALDv2_1 = ({ form, index, date }) => {
         </div>
         <div className='mt-5' style={{ textAlign: "end" }}>
           {/* <a target="_blank" href={`https://aldprototype.ca/value/${form['Anchor Submission Number']}`}> */}
-          <Link to={`/value/${form['Anchor Submission Number']}`}>
+          <Link to={`/value/${form['Submission Number']}`}>
             <Button className='form-button'>View ALD Report</Button>
           </Link>
           {/* </a> */}
