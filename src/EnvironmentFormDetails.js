@@ -7,11 +7,10 @@ import Form3 from './forms/environmentPopups/Form3'
 import Form2 from './forms/environmentPopups/Form2'
 import { tab } from '@testing-library/user-event/dist/tab'
 import CommentBox from './CommentBox'
-import { baseUrl} from './helper'
+import { baseUrl } from './helper'
 
 const EnvironmentFormDetails = () => {
     const [tableData, setTableData] = useState()
-    console.log(tableData)
     const [loading, setLoading] = useState(false)
     const param = useParams();
     const [form2, setForm2] = useState(false)
@@ -46,7 +45,7 @@ const EnvironmentFormDetails = () => {
                 "DateofFeedback": "",
                 "activeCode": tableData?.['Active Code'],
                 "Form": "TOX",
-                "FormLink": `${baseUrl.split(':3000')[0]}/environment/${param.submissionNumber}?shmode=1`,
+                "FormLink": `${window.location.href}?shmode=1`,
                 "SectionHeadName": tableData?.['ALD Approved By'],
                 "EvaluatorName": tableData?.Evaluator,
                 "updated": moment().format('YYYY-MM-DD'),

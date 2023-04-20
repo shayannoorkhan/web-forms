@@ -69,7 +69,7 @@ const FormDetails = () => {
                 "DateofFeedback": "",
                 "activeCode": tableData?.['Active Code'],
                 "Form": "TOX",
-                "FormLink": `${baseUrl.split(':3000')[0]}/environment/${param.submissionNumber}?shmode=1`,
+                "FormLink": `${window.location.href}?shmode=1`,
                 "SectionHeadName": tableData?.['ALD Approved By'],
                 "EvaluatorName": tableData?.Evaluator,
                 "updated": moment().format('YYYY-MM-DD'),
