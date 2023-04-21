@@ -49,7 +49,7 @@ const Home = () => {
             setGeneralInfoForms(filterGenInfoForms)
             const filterToxForms = data?.filter(item => item['ALD Report to Generate'] === 'TOX')
             setToxForms(filterToxForms)
-            const filterEnviroment = data?.filter(item => item['ALD Report to Generate'] === 'TOX')
+            const filterEnviroment = data?.filter(item => item['ALD Report to Generate'] === 'Environment')
             setEnvironmentForms(filterEnviroment)
         }
     }, [data])

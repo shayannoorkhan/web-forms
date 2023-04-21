@@ -17,7 +17,7 @@ import Form11 from './toxPopups/Form11'
 import Form6 from './toxPopups/Form6'
 import Form7 from './toxPopups/Form7'
 import CommentBox from './CommentBox'
-import { baseUrl} from './helper'
+import { baseUrl } from './helper'
 
 const ToxFormDetails = () => {
     const [tableData, setTableData] = useState()
@@ -57,6 +57,7 @@ const ToxFormDetails = () => {
         axios.get(`${baseUrl}sectionheadfeedback/${param.submissionNumber}/TOX`)
             .then((resp) => {
                 setComments(resp.data[0])
+                setApprovalBody({ ...approvalBody, 'Comments': resp.data[0].Comments, 'Feedback': resp.data[0].Feedback, 'DateofFeedback': resp.data[0].DateofFeedback ? moment(resp.data[0].DateofFeedback).format('YYYY-MM-DD') : moment().format('YYYY-MM-DD'), 'id': resp.data[0].id })
             }).catch((err) => {
                 console.log('error')
             })
@@ -66,11 +67,11 @@ const ToxFormDetails = () => {
         if (tableData) {
             const obj = {
                 "SubmissionNumber": param.submissionNumber,
-                "Comments": "",
-                "Feedback": "Pending",
-                "DateofFeedback": "",
+                "Comments": comments ? comments?.Comments : null,
+                "Feedback": comments ? comments?.Feedback : null,
+                "DateofFeedback": comments ? moment(comments.DateofFeedback).format('YYYY-MM-DD') : null,
                 "activeCode": tableData?.['Active Code'],
-                "Form": "TOX",
+                "Form": "Environment",
                 "FormLink": `${window.location.href}?shmode=1`,
                 "SectionHeadName": tableData?.['ALD Approved By'],
                 "EvaluatorName": tableData?.Evaluator,
@@ -83,12 +84,12 @@ const ToxFormDetails = () => {
     }, [tableData])
 
     function updateTableData() {
-        tableData['ALD Last Updated on'] = moment(tableData['ALD Last Updated on']).format('YYYY-MM-DD')
-        tableData['ALD created on'] = moment(tableData['ALD created on']).format('YYYY-MM-DD')
-        tableData['Initiation Date'] = moment(tableData['Initiation Date']).format('YYYY-MM-DD')
-        tableData['SMC BN2 Date'] = moment(tableData['SMC BN2 Date']).format('YYYY-MM-DD')
-        tableData['SMC BN1 Date'] = moment(tableData['SMC BN1 Date']).format('YYYY-MM-DD')
-        tableData['Next Assessment Date'] = moment(tableData['Next Assessment Date']).format('YYYY-MM-DD')
+        tableData['ALD Last Updated on'] = tableData['ALD Last Updated on'] ? moment(tableData['ALD Last Updated on']).format('YYYY-MM-DD') : null
+        tableData['ALD created on'] = tableData['ALD created on'] ? moment(tableData['ALD created on']).format('YYYY-MM-DD') : null
+        tableData['Initiation Date'] = tableData['Initiation Date'] ? moment(tableData['Initiation Date']).format('YYYY-MM-DD') : null
+        tableData['SMC BN2 Date'] = tableData['SMC BN2 Date'] ? moment(tableData['SMC BN2 Date']).format('YYYY-MM-DD') : null
+        tableData['SMC BN1 Date'] = tableData['SMC BN1 Date'] ? moment(tableData['SMC BN1 Date']).format('YYYY-MM-DD') : null
+        tableData['Next Assessment Date'] = tableData['Next Assessment Date'] ? moment(tableData['Next Assessment Date']).format('YYYY-MM-DD') : null
         setLoading(true)
         axios.put(`${baseUrl}data/${param.submissionNumber}`, tableData)
             .then((resp) => {
@@ -341,7 +342,7 @@ const ToxFormDetails = () => {
 
     function handleApproval() {
         setLoading(true)
-        axios.put(`${baseUrl}sectionheadfeedback/${approvalBody.id}`, approvalBody)
+        axios.put(`${baseUrl}sectionheadfeedback/${approvalBody?.id ? approvalBody?.id : 0}`, approvalBody)
             .then((resp) => {
                 setLoading(false)
                 message.success('Requested for approval')
@@ -359,7 +360,10 @@ const ToxFormDetails = () => {
                     {/* <Button onClick={() => window.print()} className='form-button'>Print Form</Button> */}
                     <div className='d-flex align-items-center'>
                         <Button onClick={() => window.print()} className='form-button'>Print Form</Button>
-                        <Button className='form-button' onClick={() => handleApproval()} disabled={loading} loading={loading}>Request Approval</Button>
+                        {
+                            !window.location.href.includes('shmode') &&
+                            <Button className='form-button' onClick={() => handleApproval()} disabled={loading} loading={loading}>Request Approval</Button>
+                        }
                     </div>
                 </div>
                 <table className="table table-bordered table-striped">
@@ -1067,7 +1071,7 @@ const ToxFormDetails = () => {
                     </table>
                 </div>
             </div>
-            <CommentBox comments={comments} />
+            <CommentBox comments={comments} setComments={setComments} />
         </div>
     )
 }

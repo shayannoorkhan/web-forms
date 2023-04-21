@@ -1,1 +1,1 @@
-export const baseUrl = 'https://aldprototype.ca:3000/api/';
+export const baseUrl = 'https://eskimau.com:4000/api/';
