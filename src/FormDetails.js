@@ -50,47 +50,63 @@ const FormDetails = () => {
 
     const [approvalBody, setApprovalBody] = useState()
     const [comments, setComments] = useState()
+    console.log(approvalBody)
 
     function getComments() {
         axios.get(`${baseUrl}sectionheadfeedback/${param.submissionNumber}/General%20Info`)
             .then((resp) => {
                 setComments(resp.data[0])
-                setApprovalBody({ ...approvalBody, 'Comments': resp.data[0].Comments, 'Feedback': resp.data[0].Feedback, 'DateofFeedback': resp.data[0].DateofFeedback ? moment(resp.data[0].DateofFeedback).format('YYYY-MM-DD') : moment().format('YYYY-MM-DD'), 'id': resp.data[0].id })
+                // setApprovalBody({ ...approvalBody, 'Comments': resp.data[0].Comments, 'Feedback': resp.data[0].Feedback, 'DateofFeedback': resp.data[0].DateofFeedback ? moment(resp.data[0].DateofFeedback).format('YYYY-MM-DD') : moment().format('YYYY-MM-DD'), 'id': resp.data[0].id })
             }).catch((err) => {
                 console.log('error')
             })
     }
 
     useEffect(() => {
-        if (tableData && comments) {
+        if (tableData) {
             const obj = {
                 "SubmissionNumber": param.submissionNumber,
-                "Comments": comments ? comments?.Comments : null,
-                "Feedback": comments ? comments?.Feedback : null,
-                "DateofFeedback": comments ? moment(comments.DateofFeedback).format('YYYY-MM-DD') : null,
+                "Comments": comments ? comments?.Comments : "",
+                "Feedback": comments ? comments?.Feedback : "Pending",
+                "DateofFeedback": comments ? moment(comments.DateofFeedback).format('YYYY-MM-DD') : "",
                 "activeCode": tableData?.['Active Code'],
-                "Form": "Environment",
+                "Form": "General Info",
                 "FormLink": `${window.location.href}?shmode=1`,
                 "SectionHeadName": tableData?.['ALD Approved By'],
                 "EvaluatorName": tableData?.Evaluator,
                 "updated": moment().format('YYYY-MM-DD'),
                 "flags": 0,
-                "id": 0
+                "id": comments ? comments?.id : 0
             }
             setApprovalBody(obj)
         }
-    }, [tableData])
+    }, [tableData, comments])
 
     function handleApproval() {
+        approvalBody.Comments = ''
+        approvalBody.Feedback = 'Pending'
         setLoading(true)
-        axios.put(`${baseUrl}sectionheadfeedback/${approvalBody?.id ? approvalBody?.id : 0}`, approvalBody)
-            .then((resp) => {
-                setLoading(false)
-                message.success('Requested for approval')
-            }).catch((err) => {
-                setLoading(false)
-                message.erorr('Error')
-            })
+        if (approvalBody?.id) {
+            axios.put(`${baseUrl}sectionheadfeedback/${approvalBody?.id}`, approvalBody)
+                .then((resp) => {
+                    setLoading(false)
+                    message.success('Requested for approval')
+                    getComments()
+                }).catch((err) => {
+                    setLoading(false)
+                    message.error('Error')
+                })
+        } else {
+            axios.post(`${baseUrl}sectionheadfeedback`, approvalBody)
+                .then((resp) => {
+                    setLoading(false)
+                    message.success('Requested for approval')
+                    getComments()
+                }).catch((err) => {
+                    setLoading(false)
+                    message.error('Error')
+                })
+        }
     }
 
     function updateTableData() {
@@ -316,7 +332,7 @@ const FormDetails = () => {
                     <div className='d-flex align-items-center'>
                         <Button onClick={() => window.print()} className='form-button'>Print Form</Button>
                         {
-                            !window.location.href.includes('shmode') &&
+                            (!window.location.href.includes('shmode') && comments?.Feedback !== 'Approved') &&
                             <Button className='form-button' onClick={() => handleApproval()} disabled={loading} loading={loading}>Request Approval</Button>
                         }
                     </div>
@@ -1049,8 +1065,8 @@ const FormDetails = () => {
                     </table>
                 </div>
             </div>
-            <CommentBox comments={comments} setComments={setComments} />
-        </div>
+            <CommentBox comments={comments} setComments={setComments} approvalBody={approvalBody} />
+        </div >
     )
 }
 

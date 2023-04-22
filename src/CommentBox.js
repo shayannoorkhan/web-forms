@@ -4,22 +4,45 @@ import React, { useState } from 'react'
 import { baseUrl } from './helper'
 import moment from 'moment'
 
-const CommentBox = ({ comments, setComments }) => {
+const CommentBox = ({ comments, setComments, approvalBody }) => {
 
     const [loading, setLoading] = useState(false)
 
     function giveComments() {
-        comments.DateofFeedback = moment().format('YYYY-MM-DD')
-        comments.updated = moment().format('YYYY-MM-DD')
+        const obj = {
+            "SubmissionNumber": approvalBody?.SubmissionNumber,
+            "Comments": comments?.Comments,
+            "Feedback": comments?.Feedback,
+            "DateofFeedback": moment().format('YYYY-MM-DD'),
+            "activeCode": approvalBody?.activeCode,
+            "Form": approvalBody?.Form,
+            "FormLink": approvalBody?.FormLink,
+            "SectionHeadName": approvalBody?.SectionHeadName,
+            "EvaluatorName": approvalBody?.EvaluatorName,
+            "updated": moment().format('YYYY-MM-DD'),
+            "flags": 0,
+            "id": comments?.id ? comments?.id : 0
+        }
         setLoading(true)
-        axios.put(`${baseUrl}sectionheadfeedback/${comments?.id ? comments?.id : 0}`, comments)
-            .then((resp) => {
-                setLoading(false)
-                message.success('Feedback Submitted')
-            }).catch((err) => {
-                setLoading(false)
-                message.erorr('Error')
-            })
+        if (obj?.id) {
+            axios.put(`${baseUrl}sectionheadfeedback/${obj?.id ? obj?.id : 0}`, obj)
+                .then((resp) => {
+                    setLoading(false)
+                    message.success('Feedback Submitted')
+                }).catch((err) => {
+                    setLoading(false)
+                    message.error('Error')
+                })
+        } else {
+            axios.post(`${baseUrl}sectionheadfeedback`, obj)
+                .then((resp) => {
+                    setLoading(false)
+                    message.success('Feedback Submitted')
+                }).catch((err) => {
+                    setLoading(false)
+                    message.error('Error')
+                })
+        }
     }
 
     return (
@@ -42,11 +65,12 @@ const CommentBox = ({ comments, setComments }) => {
                             window.location.href.includes('shmode') ?
                                 <tr>
                                     <td>
-                                        <Input onChange={(e) => setComments({ ...comments, 'Comments': e.target.value })} />
+                                        <Input value={comments?.Comments} onChange={(e) => setComments({ ...comments, 'Comments': e.target.value })} />
                                     </td>
                                     <td>
                                         <Select
                                             className='w-100'
+                                            value={comments?.Feedback}
                                             options={[
                                                 { label: 'Approved', value: 'Approved' },
                                                 { label: 'Rejected', value: 'Rejected' }
