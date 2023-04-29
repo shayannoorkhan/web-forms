@@ -3,6 +3,7 @@ import { Modal, Select, Input, Button, message, DatePicker, Checkbox } from 'ant
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { baseUrl } from '../helper';
+import dayjs from 'dayjs';
 
 const Form10 = ({ open, setOpen, data, getFormData }) => {
     const param = useParams()
@@ -72,7 +73,7 @@ const Form10 = ({ open, setOpen, data, getFormData }) => {
             </div>
             <div>
                 <p>Date of Publication:</p>
-                <DatePicker className='w-100' onChange={handleDate} />
+                <DatePicker className='w-100' onChange={handleDate} value={formData?.Date_of_Publication && dayjs(formData?.Date_of_Publication)} />
             </div>
         </Modal>
     )

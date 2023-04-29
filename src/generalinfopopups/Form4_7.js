@@ -3,6 +3,7 @@ import { Modal, Select, Input, Button, message, DatePicker, Checkbox } from 'ant
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { baseUrl } from '../helper';
+import dayjs from 'dayjs';
 
 const Form4_7 = ({ open, setOpen, data, getFormData, setData }) => {
     const param = useParams()
@@ -28,7 +29,9 @@ const Form4_7 = ({ open, setOpen, data, getFormData, setData }) => {
 
     function addRecord() {
         const obj = {
-            ...formData, 'Submission_Number': param?.submissionNumber
+            ...formData, 'Submission_Number': param?.submissionNumber,
+            'PMRA_Number': parseInt(formData?.PMRA_Number),
+            'Registration_Number': parseInt(formData?.Registration_Number)
         }
         setLoading(true)
         axios.post(`${baseUrl}geninfotgaiepunfulfilledconditionstable`, obj)
@@ -42,8 +45,13 @@ const Form4_7 = ({ open, setOpen, data, getFormData, setData }) => {
     }
 
     function edit() {
+        const obj = {
+            ...formData,
+            'PMRA_Number': parseInt(formData?.PMRA_Number),
+            'Registration_Number': parseInt(formData?.Registration_Number)
+        }
         setLoading(true)
-        axios.put(`${baseUrl}geninfotgaiepunfulfilledconditionstable/${formData?.row_id}`, formData)
+        axios.put(`${baseUrl}geninfotgaiepunfulfilledconditionstable/${formData?.row_id}`, obj)
             .then((resp) => {
                 message.success('Record Updated')
                 getFormData()
@@ -59,7 +67,7 @@ const Form4_7 = ({ open, setOpen, data, getFormData, setData }) => {
     }
 
     return (
-        <Modal centered className='form-30' open={open} style={{ width: '35%' }} onCancel={onClose} title='Add New Record' footer={[
+        <Modal centered className='form-30' open={open} style={{ width: '35%' }} onCancel={onClose} title={formData?.row_id ? 'Edit Record' : 'Add New Record'} footer={[
             <>
                 <Button loading={loading} disabled={loading} onClick={formData?.row_id ? edit : addRecord} className="form-button">
                     Save
@@ -87,7 +95,7 @@ const Form4_7 = ({ open, setOpen, data, getFormData, setData }) => {
             </div>
             <div className='mb-3'>
                 <p>Due Date:</p>
-                <DatePicker onChange={handleDate} className="w-100" />
+                <DatePicker onChange={handleDate} className="w-100" value={formData?.Due_date && dayjs(formData?.Due_date)} />
             </div>
             <div className='mb-3'>
                 <p>DACO Number:</p>

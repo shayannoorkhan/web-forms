@@ -3,6 +3,7 @@ import { Modal, Select, Input, Button, message, DatePicker } from 'antd'
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { baseUrl } from '../helper';
+import dayjs from 'dayjs'
 
 const RegulatoryHistory = ({ open, setOpen, data, getFormData }) => {
     const param = useParams()
@@ -33,33 +34,40 @@ const RegulatoryHistory = ({ open, setOpen, data, getFormData }) => {
     function addRecord() {
         const obj = {
             ...formData, 'Submission_Number': param?.submissionNumber,
-            'Subsection_Name': "Initial TGAI registration"
+            'Subsection_Name': "Initial TGAI registration",
+            'PMRA_Number_RDD': parseInt(formData?.PMRA_Number_RDD),
+            'Registration_Number': parseInt(formData?.Registration_Number)
         }
         setLoading(true)
         axios.post(`${baseUrl}geninfosection3data`, obj)
             .then((resp) => {
                 message.success('Record Added')
                 getFormData()
-                setOpen(false)
-                formData({})
                 setLoading(false)
+                formData({})
+                setOpen(false)
             })
     }
 
     function edit() {
+        const obj = {
+            ...formData,
+            'PMRA_Number_RDD': parseInt(formData?.PMRA_Number_RDD),
+            'Registration_Number': parseInt(formData?.Registration_Number)
+        }
         setLoading(true)
-        axios.put(`${baseUrl}geninfosection3data/${formData?.row_id}`, formData)
+        axios.put(`${baseUrl}geninfosection3data/${formData?.row_id}`, obj)
             .then((resp) => {
                 message.success('Record Updated')
                 getFormData()
-                setOpen(false)
-                formData({})
                 setLoading(false)
+                formData({})
+                setOpen(false)
             })
     }
 
     return (
-        <Modal centered className='form-30' open={open} style={{ width: '35%' }} onCancel={() => setOpen(false)} title='Add New Record' footer={[
+        <Modal centered className='form-30' open={open} style={{ width: '35%' }} onCancel={() => setOpen(false)} title={formData?.row_id ? 'Edit Record' : 'Add New Record'} footer={[
             <>
                 <Button loading={loading} disabled={loading} onClick={formData?.row_id ? edit : addRecord} className="form-button">
                     Save
@@ -68,7 +76,7 @@ const RegulatoryHistory = ({ open, setOpen, data, getFormData }) => {
         ]}>
             <div className='mb-3'>
                 <p>First Registered Date:</p>
-                <DatePicker onChange={handleRegisteredDate} className="w-100" />
+                <DatePicker onChange={handleRegisteredDate} value={dayjs(formData?.First_Registered_Date).format('YYYY-MM-DD')} className="w-100" />
             </div>
             <div className='mb-3'>
                 <p>First Registration Submission Number::</p>
@@ -84,7 +92,7 @@ const RegulatoryHistory = ({ open, setOpen, data, getFormData }) => {
             </div>
             <div className='mb-3'>
                 <p>Registration Number:</p>
-                <Input placeholder='Registration Number' className='mb-3' value={formData?.Registration_Number} onChange={(e) => handleFormData('Registration_Number', e.target.value)} />
+                <Input placeholder='Registration Number' className='mb-3' type="number" value={formData?.Registration_Number} onChange={(e) => handleFormData('Registration_Number', e.target.value)} />
             </div>
             <div className='mb-3'>
                 <p>Registration Status:</p>
@@ -99,11 +107,11 @@ const RegulatoryHistory = ({ open, setOpen, data, getFormData }) => {
             </div>
             <div className='mb-3'>
                 <p>PMRA Number RDD:</p>
-                <Input placeholder='PMRA Number RDD' className='mb-3' value={formData?.PMRA_Number_RDD} onChange={(e) => handleFormData('PMRA_Number_RDD', e.target.value)} />
+                <Input placeholder='PMRA Number RDD' className='mb-3' type='number' value={formData?.PMRA_Number_RDD} onChange={(e) => handleFormData('PMRA_Number_RDD', e.target.value)} />
             </div>
             <div className='mb-3'>
                 <p>Date of SMC2 BN for RDD:</p>
-                <DatePicker onChange={handlesmc2Date} className="w-100" />
+                <DatePicker onChange={handlesmc2Date} className="w-100" value={dayjs(formData?.Date_of_SMC2_BN_for_RDD).format('YYYY-MM-DD')} />
             </div>
         </Modal>
     )

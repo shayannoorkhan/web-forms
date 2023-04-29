@@ -54,7 +54,7 @@ const Form4_4 = ({ open, setOpen, data, getFormData }) => {
     }
 
     return (
-        <Modal centered className='form-30' open={open} style={{ width: '35%' }} onCancel={() => setOpen(false)} title='Add New Record' footer={[
+        <Modal centered className='form-30' open={open} style={{ width: '35%' }} onCancel={() => setOpen(false)} title={formData?.row_id ? 'Edit Record' : 'Add New Record'} footer={[
             <>
                 <Button loading={loading} disabled={loading} onClick={formData?.row_id ? edit : addRecord} className="form-button">
                     Save
@@ -64,8 +64,8 @@ const Form4_4 = ({ open, setOpen, data, getFormData }) => {
             <div className='mb-3'>
                 <p>Restrictions:</p>
                 <Select options={[
-                    { value: 1, label: 'Yes' },
-                    { value: 0, label: 'No' }
+                    { value: 'Yes', label: 'Yes' },
+                    { value: 'No', label: 'No' }
                 ]} onChange={(e) => handleFormData('Restrictions', e)} value={formData?.Restrictions} className="mb-3 w-100" placeholder='Restrictions' />
             </div>
             <div className='mb-3'>

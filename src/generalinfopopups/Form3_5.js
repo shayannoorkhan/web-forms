@@ -3,6 +3,7 @@ import { Modal, Select, Input, Button, message, DatePicker } from 'antd'
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { baseUrl } from '../helper';
+import dayjs from 'dayjs'
 
 const Form3_5 = ({ open, setOpen, data, getFormData }) => {
     const param = useParams()
@@ -23,7 +24,7 @@ const Form3_5 = ({ open, setOpen, data, getFormData }) => {
     }
 
     function handleLastUpdateDate(date, dateString) {
-        handleFormData('Status_date:', dateString)
+        handleFormData('Status_date', dateString)
     }
 
     function addRecord() {
@@ -35,9 +36,9 @@ const Form3_5 = ({ open, setOpen, data, getFormData }) => {
             .then((resp) => {
                 message.success('Record Added')
                 getFormData()
+                setLoading(false)
                 setOpen(false)
                 formData({})
-                setLoading(false)
             })
     }
 
@@ -47,9 +48,9 @@ const Form3_5 = ({ open, setOpen, data, getFormData }) => {
             .then((resp) => {
                 message.success('Record Updated')
                 getFormData()
+                setLoading(false)
                 setOpen(false)
                 formData({})
-                setLoading(false)
             })
     }
 
@@ -83,7 +84,7 @@ const Form3_5 = ({ open, setOpen, data, getFormData }) => {
             </div>
             <div className='mb-3'>
                 <p>Status Date:</p>
-                <DatePicker onChange={handleLastUpdateDate} className="w-100" />
+                <DatePicker onChange={handleLastUpdateDate} value={formData?.Status_date && dayjs(formData?.Status_date)} className="w-100" />
             </div>
             <div className='mb-3'>
                 <p>Comments:</p>

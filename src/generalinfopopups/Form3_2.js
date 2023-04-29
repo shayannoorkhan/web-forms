@@ -3,6 +3,8 @@ import { Modal, Select, Input, Button, message, DatePicker } from 'antd'
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { baseUrl } from '../helper';
+import moment from 'moment';
+import dayjs from 'dayjs'
 
 const Form3_2 = ({ open, setOpen, data, getFormData }) => {
     const param = useParams()
@@ -40,26 +42,31 @@ const Form3_2 = ({ open, setOpen, data, getFormData }) => {
             .then((resp) => {
                 message.success('Record Added')
                 getFormData()
-                setOpen(false)
                 formData({})
                 setLoading(false)
+                setOpen(false)
             })
     }
 
     function edit() {
+        const obj = {
+            ...formData,
+            'Date_of_SMC2_BN_for_PRVD': formData?.Date_of_SMC2_BN_for_PRVD ? moment(formData?.Date_of_SMC2_BN_for_PRVD).format('YYYY-MM-DD') : null,
+            'Last_Status_Update_Date': formData?.Last_Status_Update_Date ? moment(formData?.Last_Status_Update_Date).format('YYYY-MM-DD') : null
+        }
         setLoading(true)
-        axios.put(`${baseUrl}geninfosection3data/${formData?.row_id}`, formData)
+        axios.put(`${baseUrl}geninfosection3data/${formData?.row_id}`, obj)
             .then((resp) => {
                 message.success('Record Updated')
                 getFormData()
-                setOpen(false)
                 formData({})
                 setLoading(false)
+                setOpen(false)
             })
     }
 
     return (
-        <Modal centered className='form-30' open={open} style={{ width: '35%' }} onCancel={() => setOpen(false)} title='Add New Record' footer={[
+        <Modal centered className='form-30' open={open} style={{ width: '35%' }} onCancel={() => setOpen(false)} title={formData?.row_id ? 'Edit Record' : 'Add New Record'} footer={[
             <>
                 <Button loading={loading} disabled={loading} onClick={formData?.row_id ? edit : addRecord} className="form-button">
                     Save

@@ -3,6 +3,7 @@ import { Modal, Select, Input, Button, message, DatePicker } from 'antd'
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { baseUrl } from '../helper';
+import dayjs from 'dayjs'
 
 const Form3_4 = ({ open, setOpen, data, getFormData }) => {
     const param = useParams()
@@ -23,7 +24,7 @@ const Form3_4 = ({ open, setOpen, data, getFormData }) => {
     }
 
     function handleLastUpdateDate(date, dateString) {
-        handleFormData('Date_First_Registered:', dateString)
+        handleFormData('Date_First_Registered', dateString)
     }
 
     function handlesmc2Date(date, dateString) {
@@ -43,9 +44,9 @@ const Form3_4 = ({ open, setOpen, data, getFormData }) => {
             .then((resp) => {
                 message.success('Record Added')
                 getFormData()
-                setOpen(false)
-                formData({})
                 setLoading(false)
+                formData({})
+                setOpen(false)
             })
     }
 
@@ -55,9 +56,9 @@ const Form3_4 = ({ open, setOpen, data, getFormData }) => {
             .then((resp) => {
                 message.success('Record Updated')
                 getFormData()
-                setOpen(false)
-                formData({})
                 setLoading(false)
+                formData({})
+                setOpen(false)
             })
     }
 
@@ -87,7 +88,7 @@ const Form3_4 = ({ open, setOpen, data, getFormData }) => {
             </div>
             <div className='mb-3'>
                 <p>Date First Registered:</p>
-                <DatePicker onChange={handleLastUpdateDate} className="w-100" />
+                <DatePicker onChange={handleLastUpdateDate} className="w-100" value={dayjs(formData?.Date_First_Registered).format('YYYY-MM-DD')} />
             </div>
             <div className='mb-3'>
                 <p>Initial Submission Category:</p>
@@ -103,7 +104,7 @@ const Form3_4 = ({ open, setOpen, data, getFormData }) => {
             </div>
             <div className='mb-3'>
                 <p>USC List:</p>
-                <Input placeholder='USC List' type='number' className='mb-3' value={formData?.USC_List} onChange={(e) => handleFormData('USC_List', e.target.value)} />
+                <Input placeholder='USC List' className='mb-3' value={formData?.USC_List} onChange={(e) => handleFormData('USC_List', e.target.value)} />
             </div>
             <div className='mb-3'>
                 <p>Registration Status:</p>

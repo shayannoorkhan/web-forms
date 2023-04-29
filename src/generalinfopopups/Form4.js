@@ -28,33 +28,38 @@ const Form4 = ({ open, setOpen, data, getFormData }) => {
 
     function addRecord() {
         const obj = {
-            ...formData, 'Submission_Number': param?.submissionNumber
+            ...formData, 'Submission_Number': param?.submissionNumber,
+            'PMRA_Number': parseInt(formData?.PMRA_Number),
+            'Subsection_ID': "4.1"
         }
         setLoading(true)
         axios.post(`${baseUrl}geninforegulatorstable`, obj)
             .then((resp) => {
                 message.success('Record Added')
                 getFormData()
+                setLoading(false)
                 setOpen(false)
                 formData({})
-                setLoading(false)
             })
     }
 
     function edit() {
+        const obj = {
+            'PMRA_Number': parseInt(formData?.PMRA_Number)
+        }
         setLoading(true)
-        axios.put(`${baseUrl}geninforegulatorstable/${formData?.row_id}`, formData)
+        axios.put(`${baseUrl}geninforegulatorstable/${formData?.row_id}`, obj)
             .then((resp) => {
                 message.success('Record Updated')
                 getFormData()
+                setLoading(false)
                 setOpen(false)
                 formData({})
-                setLoading(false)
             })
     }
 
     return (
-        <Modal centered className='form-30' open={open} style={{ width: '35%' }} onCancel={() => setOpen(false)} title='Add New Record' footer={[
+        <Modal centered className='form-30' open={open} style={{ width: '35%' }} onCancel={() => setOpen(false)} title={formData?.row_id ? 'Edit Record' : 'Add New Record'} footer={[
             <>
                 <Button loading={loading} disabled={loading} onClick={formData?.row_id ? edit : addRecord} className="form-button">
                     Save
@@ -72,8 +77,8 @@ const Form4 = ({ open, setOpen, data, getFormData }) => {
             <div className='mb-3'>
                 <p>Conducted:</p>
                 <Select options={[
-                    { value: 1, label: 'Yes' },
-                    { value: 0, label: 'No' }
+                    { value: "1", label: 'Yes' },
+                    { value: "0", label: 'No' }
                 ]} onChange={(e) => handleFormData('Conducted', e)} value={formData?.Conducted} className="mb-3 w-100" placeholder='Conducted' />
             </div>
             <div className='mb-3'>
@@ -86,7 +91,7 @@ const Form4 = ({ open, setOpen, data, getFormData }) => {
             </div>
             <div className='mb-3'>
                 <p>PMRA Number:</p>
-                <Input placeholder='PMRA Number' className='mb-3' value={formData?.PMRA_Number} onChange={(e) => handleFormData('PMRA_Number', e.target.value)} />
+                <Input placeholder='PMRA Number' className='mb-3' type='number' value={formData?.PMRA_Number} onChange={(e) => handleFormData('PMRA_Number', e.target.value)} />
             </div>
             <div className='mb-3'>
                 <p>Purpose:</p>

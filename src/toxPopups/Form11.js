@@ -3,6 +3,7 @@ import { Modal, Select, Input, Button, message, DatePicker, Checkbox } from 'ant
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { baseUrl } from '../helper';
+import dayjs from 'dayjs';
 
 const Form11 = ({ open, setOpen, data, getFormData }) => {
     const param = useParams()
@@ -51,7 +52,7 @@ const Form11 = ({ open, setOpen, data, getFormData }) => {
     }
 
     return (
-        <Modal centered className='form-30' open={open} style={{ width: '35%' }} onCancel={() => setOpen(false)} title='Add New Record' footer={[
+        <Modal centered className='form-30' open={open} style={{ width: '35%' }} onCancel={() => setOpen(false)} title={formData?.row_id ? 'Edit Record' : 'Add New Record'} footer={[
             <>
                 <Button loading={loading} disabled={loading} onClick={formData?.row_id ? edit : addRecord} className="form-button">
                     Save
@@ -71,7 +72,7 @@ const Form11 = ({ open, setOpen, data, getFormData }) => {
             </div>
             <div>
                 <p>Search Conducted Date:</p>
-                <DatePicker className='w-100' onChange={handleDate} />
+                <DatePicker className='w-100' onChange={handleDate} value={formData?.Search_Conducted_Date && dayjs(formData?.Search_Conducted_Date)} />
             </div>
             <div>
                 <p>Search String:</p>

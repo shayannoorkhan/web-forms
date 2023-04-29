@@ -17,6 +17,7 @@ import Form4_7 from './generalinfopopups/Form4_7'
 import Form5 from './generalinfopopups/Form5'
 import CommentBox from './CommentBox'
 import { baseUrl } from './helper'
+import dayjs from 'dayjs'
 
 const FormDetails = () => {
     const [tableData, setTableData] = useState()
@@ -461,14 +462,13 @@ const FormDetails = () => {
                             <th scope="row">SMC BN1 Date:		</th>
                             <td>
                                 <DatePicker onChange={handlebn1Date}
-                                    defaultValue={tableData?.['SMC BN1 Date'] && moment(tableData?.['SMC BN1 Date']).format('YYYY-MM-DD')}
+                                    value={tableData?.['SMC BN1 Date'] && dayjs(tableData?.['SMC BN1 Date'])}
                                     className='w-100' />
                             </td>
                         </tr>
                         <tr>
                             <th scope="row">SMC BN2:		</th>
-                            <td>
-                                {!tableData ? null : tableData['SMC BN2']}
+                            <td><Input value={tableData && tableData['SMC BN2']} onChange={(e) => handleTableData('SMC BN2', e.target.value)} />
                             </td>
                         </tr>
                         <tr>
@@ -476,7 +476,7 @@ const FormDetails = () => {
                             {/* <td>{!tableData ? null : moment(tableData['SMC BN2 Date']).format('DD-MM-YYYY')}</td> */}
                             <td>
                                 <DatePicker onChange={handlebn2Date}
-                                    // value={tableData && tableData['SMC BN2 Date']}
+                                    value={tableData && dayjs(tableData['SMC BN2 Date'])}
                                     className='w-100' />
                             </td>
                         </tr>
@@ -518,7 +518,7 @@ const FormDetails = () => {
                             {/* <td>{!tableData ? null : tableData['Next Assessment Date']}</td> */}
                             <td>
                                 <DatePicker onChange={handlenextDate}
-                                    // value={tableData && tableData['Next Assessment Date']}
+                                    value={tableData && dayjs(tableData['Next Assessment Date'])}
                                     className='w-100' />
                             </td>
                         </tr>
@@ -528,7 +528,7 @@ const FormDetails = () => {
             </div>
             <div className='box mt-3'>
                 <p style={{ fontSize: '18px' }} className="mb-3">2. Active Ingredient Identity</p>
-                <Button className='mb-3 form-button' onClick={() => setForm2(true)}>Add new record</Button>
+                <Button className='mb-3 form-button' onClick={() => { setForm2(true); setFormProp({}) }}>Add new record</Button>
                 <GeneralInfo2 open={form2} setOpen={setForm2} data={formProp} getFormData={getForm2Data} />
                 <div className='table-responsive'>
                     <table className="table table-bordered table-striped">
@@ -564,7 +564,7 @@ const FormDetails = () => {
             <div className='box mt-3'>
                 <p style={{ fontSize: '18px' }} className="mb-3">3. Regulatory History</p>
                 <p style={{ fontSize: '15px' }} className="mb-3">3.1. Initial TGAI registration</p>
-                <Button className='form-button mb-3' onClick={() => { setForm3(true) }}>Add New Record</Button>
+                <Button className='form-button mb-3' onClick={() => { setForm3(true); setFormProp({}) }}>Add New Record</Button>
                 <RegulatoryHistory open={form3} setOpen={setForm3} data={formProp} getFormData={getForm3Data} />
                 <div className='table-responsive'>
                     <table className="table table-bordered table-striped table-responsive">
@@ -607,7 +607,7 @@ const FormDetails = () => {
             </div>
             <div className='box mt-3'>
                 <p style={{ fontSize: '15px' }} className="mb-3">3.2. Completed (i-Done) or Open Re-evaluation</p>
-                <Button className='form-button mb-3' onClick={() => { setForm32(true) }}>Add New Record</Button>
+                <Button className='form-button mb-3' onClick={() => { setForm32(true); setFormProp({}) }}>Add New Record</Button>
                 <Form3_2 open={form32} setOpen={setForm32} data={formProp} getFormData={getForm3Data} />
                 <div className='table-responsive'>
                     <table className="table table-bordered table-striped">
@@ -638,7 +638,7 @@ const FormDetails = () => {
                                     return (
                                         <tr>
                                             <td>{data?.Re_Evaluation_Status}</td>
-                                            <td>{data?.Last_Status_Update_Date}</td>
+                                            <td>{moment(data?.Last_Status_Update_Date).format('YYYY-MM-DD')}</td>
                                             <td>{data?.Re_Evaluation_Submission_Number}</td>
                                             <td>{data?.Re_Evaluation_Submission_Category}</td>
                                             <td>{data?.Re_Evaluation_Submission_Type}</td>
@@ -646,11 +646,11 @@ const FormDetails = () => {
                                             <td>{data?.Category}</td>
                                             <td>{data?.Associated_Publication_PRVD}</td>
                                             <td>{data?.PMRA_Number_PRVD}</td>
-                                            <td>{data?.Date_of_SMC2_BN_for_PRVD}</td>
+                                            <td>{moment(data?.Date_of_SMC2_BN_for_PRVD).format('YYYY-MM-DD')}</td>
                                             <td>{data?.PMRA_Number_SMC2_PRVD}</td>
                                             <td>{data?.Associated_Publication_RVD}</td>
                                             <td>{data?.PMRA_Number_RVD}</td>
-                                            <td>{data?.Date_of_SMC2_BN_for_RVD}</td>
+                                            <td>{moment(data?.Date_of_SMC2_BN_for_RVD).format('YYYY-MM-DD')}</td>
                                             <td>{data?.PMRA_Number_SMC2_RVD}</td>
                                             <td><Button className='form-button' onClick={() => { setForm32(true); setFormProp(data) }}>Edit</Button></td>
                                             <td><Button className='form-button' onClick={() => deleteForm3Data(data.row_id)}>Delete</Button></td>
@@ -664,7 +664,7 @@ const FormDetails = () => {
             </div>
             <div className='box mt-3'>
                 <p style={{ fontSize: '15px' }} className="mb-3">3.3. Completed (i-Done) or Open Special Review</p>
-                <Button className='form-button mb-3' onClick={() => { setForm33(true) }}>Add New Record</Button>
+                <Button className='form-button mb-3' onClick={() => { setForm33(true); setFormProp({}) }}>Add New Record</Button>
                 <Form3_3 open={form33} setOpen={setForm33} data={formProp} getFormData={getForm3Data} />
                 <div className='table-responsive'>
                     <table className="table table-bordered table-striped ">
@@ -694,7 +694,7 @@ const FormDetails = () => {
                                     return (
                                         <tr>
                                             <td>{data?.Special_Review_Status_Status}</td>
-                                            <td>{data?.Special_Review_Last_Status_Update_Date}</td>
+                                            <td>{moment(data?.Special_Review_Last_Status_Update_Date).format('YYYY-MM-DD')}</td>
                                             <td>{data?.Special_Review_Submission_Number}</td>
                                             <td>{data?.Special_Review_Submission_Category}</td>
                                             <td>{data?.Special_Review_Submission_Type}</td>
@@ -702,11 +702,11 @@ const FormDetails = () => {
                                             <td>{data?.Trigger}</td>
                                             <td>{data?.Associated_Publication_PSR}</td>
                                             <td>{data?.PMRA_Number_PSR}</td>
-                                            <td>{data?.Date_of_SMC2_BN_for_PSR}</td>
+                                            <td>{moment(data?.Date_of_SMC2_BN_for_PSR).format('YYYY-MM-DD')}</td>
                                             <td>{data?.PMRA_Number_SMC2_PSR}</td>
                                             <td>{data?.Associated_Publication_SRD}</td>
                                             <td>{data?.PMRA_Number_SMC2_SRD}</td>
-                                            <td>{data?.Date_of_SMC2_BN_for_SRD}</td>
+                                            <td>{moment(data?.Date_of_SMC2_BN_for_SRD).format('YYYY-MM-DD')}</td>
                                             <td><Button className='form-button' onClick={() => { setForm33(true); setFormProp(data) }}>Edit</Button></td>
                                             <td><Button className='form-button' onClick={() => deleteForm3Data(data.row_id)}>Delete</Button></td>
                                         </tr>
@@ -720,7 +720,7 @@ const FormDetails = () => {
             </div>
             <div className='box mt-3'>
                 <p style={{ fontSize: '15px' }} className="mb-3">3.4. TGAI Registrants List</p>
-                <Button className='form-button mb-3' onClick={() => { setForm34(true) }}>Add New Record</Button>
+                <Button className='form-button mb-3' onClick={() => { setForm34(true); setFormProp({}) }}>Add New Record</Button>
                 <Form3_4 open={form34} setOpen={setForm34} data={formProp} getFormData={getForm3_4Data} />
                 <div className='table-responsive'>
                     <table className="table table-bordered table-striped ">
@@ -749,7 +749,7 @@ const FormDetails = () => {
                                             <td>{data?.Registrant_Assigned_Code}</td>
                                             <td>{data?.Registrant_Assigned_Number}</td>
                                             <td>{data?.Registration_Number}</td>
-                                            <td>{data?.Date_First_Registered}</td>
+                                            <td>{moment(data?.Date_First_Registered).format('YYYY-MM-DD')}</td>
                                             <td>{data?.Initial_Submission_Category}</td>
                                             <td>{data?.Initial_Submission_Type}</td>
                                             <td>{data?.USC_List}</td>
@@ -768,7 +768,7 @@ const FormDetails = () => {
             </div>
             <div className='box mt-3'>
                 <p style={{ fontSize: '15px' }} className="mb-3">3.5. Domestic and Internation Regulatory Status of Active Ingredient</p>
-                <Button className='form-button mb-3' onClick={() => { setForm35(true) }}>Add New Record</Button>
+                <Button className='form-button mb-3' onClick={() => { setForm35(true); setFormProp({}) }}>Add New Record</Button>
                 <Form3_5 open={form35} setOpen={setForm35} data={formProp} getFormData={getForm3_5Data} />
                 <div className='table-responsive'>
                     <table className="table table-bordered table-striped ">
@@ -805,7 +805,7 @@ const FormDetails = () => {
             <div className='box mt-3'>
                 <p style={{ fontSize: '18px' }} className="mb-3">4. Background and Additional Information</p>
                 <p style={{ fontSize: '15px' }} className="mb-3">4.1-4.3 Pre-Submission Consultations,Emergency Registrations & Research Authorizations</p>
-                <Button className='form-button mb-3' onClick={() => { setForm4(true) }}>Add New Record</Button>
+                <Button className='form-button mb-3' onClick={() => { setForm4(true); setFormProp({}) }}>Add New Record</Button>
                 <Form4 open={form4} setOpen={setForm4} data={formProp} getFormData={getForm4Data} />
                 <div className='table-responsive'>
                     <table className="table table-bordered table-striped ">
@@ -829,7 +829,7 @@ const FormDetails = () => {
                                         <tr>
                                             <td>{data?.Subsection_Name}</td>
                                             <td>{data?.Subsection_ID}</td>
-                                            <td>{data?.Conducted}</td>
+                                            <td>{data?.Conducted == '1' ? 'Yes' : 'No'}</td>
                                             <td>{data?.Submission_Status_Level}</td>
                                             <td>{data?.Submission_Status_Activity}</td>
                                             <td>{data?.PMRA_Number}</td>
@@ -847,7 +847,7 @@ const FormDetails = () => {
             </div>
             <div className='box mt-3'>
                 <p style={{ fontSize: '15px' }} className="mb-3">4.4 End Product Marketing</p>
-                <Button className='form-button mb-3' onClick={() => { setForm44(true) }}>Add New Record</Button>
+                <Button className='form-button mb-3' onClick={() => { setForm44(true); setFormProp({}) }}>Add New Record</Button>
                 <Form4_4 open={form44} setOpen={setForm44} data={formProp} getFormData={getForm4_4Data} />
                 <div className='table-responsive'>
                     <table className="table table-bordered table-striped ">
@@ -871,8 +871,8 @@ const FormDetails = () => {
                                             <td>{data?.Restrictions}</td>
                                             <td>{data?.Registration_Number}</td>
                                             <td>{data?.Product_Name}</td>
-                                            <td>{data?.Historical}</td>
-                                            <td>{data?.Current}</td>
+                                            <td>{data?.Historical === 1 ? 'Yes' : 'No'}</td>
+                                            <td>{data?.Current === 1 ? 'Yes' : 'No'}</td>
                                             <td>{data?.From_Submission_Number}</td>
                                             <td><Button className='form-button' onClick={() => { setForm44(true); setFormProp(data) }}>Edit</Button></td>
                                             <td><Button className='form-button' onClick={() => deleteForm4_4Data(data.row_id)}>Delete</Button></td>
@@ -887,7 +887,7 @@ const FormDetails = () => {
             </div>
             <div className='box mt-3'>
                 <p style={{ fontSize: '15px' }} className="mb-3">4.5 ROEB Compliance Audit Trail</p>
-                <Button className='form-button mb-3' onClick={() => { setForm45(true) }}>Add New Record</Button>
+                <Button className='form-button mb-3' onClick={() => { setForm45(true); setFormProp({}) }}>Add New Record</Button>
                 <Form4_5 open={form45} setOpen={setForm45} data={formProp} getFormData={getForm4_5Data} />
                 <div className='table-responsive'>
                     <table className="table table-bordered table-striped ">
@@ -912,7 +912,7 @@ const FormDetails = () => {
                                             <td>{data?.Sector}</td>
                                             <td>{data?.PCPA_Contravention}</td>
                                             <td>{moment(data?.Date_Of_Reported_Contravention).format('DD-MM-YYYY')}</td>
-                                            <td>{data?.Product_Description}</td>
+                                            <td>{data?.Product_Description_At_Time_Of_Contravention}</td>
                                             <td>{data?.Corrective_Action_Taken}</td>
                                             <td>{data?.Compliance_Status_Of_Registrant_At_Time_Of_Contravention}</td>
                                             <td>{data?.Additional_Information}</td>
@@ -929,7 +929,7 @@ const FormDetails = () => {
             </div>
             <div className='box mt-3'>
                 <p style={{ fontSize: '15px' }} className="mb-3">4.6 Information from Call-Line</p>
-                <Button className='form-button mb-3' onClick={() => { setForm46(true) }}>Add New Record</Button>
+                <Button className='form-button mb-3' onClick={() => { setForm46(true); setFormProp({}) }}>Add New Record</Button>
                 <Form4_6 open={form46} setOpen={setForm46} data={formProp} getFormData={getForm4_6Data} />
                 <div className='table-responsive'>
                     <table className="table table-bordered table-striped ">
@@ -961,7 +961,7 @@ const FormDetails = () => {
             </div>
             <div className='box mt-3'>
                 <p style={{ fontSize: '15px' }} className="mb-3">4.7 TGAI and Eps Unfulfilled Conditions</p>
-                <Button className='form-button mb-3' onClick={() => { setForm47(true) }}>Add New Record</Button>
+                <Button className='form-button mb-3' onClick={() => { setForm47(true); setFormProp({}) }}>Add New Record</Button>
                 <Form4_7 open={form47} setOpen={setForm47} data={formProp} setData={setFormProp} getFormData={getForm4_7Data} />
                 <div className='table-responsive'>
                     <table className="table table-bordered table-striped ">
@@ -1003,7 +1003,7 @@ const FormDetails = () => {
             </div>
             <div className='box mt-3'>
                 <p style={{ fontSize: '15px' }} className="mb-3">5. ALD Science Group Involvement</p>
-                <Button className='form-button mb-3' onClick={() => { setForm5(true) }}>Add New Record</Button>
+                <Button className='form-button mb-3' onClick={() => { setForm5(true); setFormProp({}) }}>Add New Record</Button>
                 <Form5 open={form5} setOpen={setForm5} data={formProp} setData={setFormProp} getFormData={getForm5Data} />
                 <div className='table-responsive'>
                     <table className="table table-bordered table-striped ">
@@ -1048,7 +1048,7 @@ const FormDetails = () => {
                                             <td>{data?.RRS_Details}</td>
                                             <td>{data?.EAD}</td>
                                             <td>{data?.EAD_Details}</td>
-                                            <td>{data?.EAD_WM}</td>
+                                            <td>{data['EAD-WM']}</td>
                                             <td>{data?.EAD_WM_Details}</td>
                                             <td>{data?.VALUE}</td>
                                             <td>{data?.VALUE_Details}</td>

@@ -3,6 +3,7 @@ import { Modal, Select, Input, Button, message, DatePicker } from 'antd'
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { baseUrl } from '../helper';
+import dayjs from 'dayjs';
 
 const Form2 = ({ open, setOpen, data, getFormData }) => {
     const param = useParams()
@@ -51,7 +52,7 @@ const Form2 = ({ open, setOpen, data, getFormData }) => {
     }
 
     return (
-        <Modal centered className='form-30' open={open} style={{ width: '35%' }} onCancel={() => setOpen(false)} title='Add New Record' footer={[
+        <Modal centered className='form-30' open={open} style={{ width: '35%' }} onCancel={() => setOpen(false)} title={formData?.row_id ? 'Edit Record' : 'Add New Record'} footer={[
             <>
                 <Button loading={loading} disabled={loading} onClick={formData?.row_id ? edit : addRecord} className="form-button">
                     Save
@@ -103,7 +104,7 @@ const Form2 = ({ open, setOpen, data, getFormData }) => {
             </div>
             <div>
                 <p>Actual End Date:</p>
-                <DatePicker onChange={handleDate} className="w-100" />
+                <DatePicker onChange={handleDate} className="w-100" value={formData?.Actual_End_Date && dayjs(formData?.Actual_End_Date)} />
                 {/* <Input placeholder='ARfD Unit' className='mb-3' value={formData?.ARfD_Unit} onChange={(e) => handleFormData('ARfD_Unit', e.target.value)} /> */}
             </div>
         </Modal>

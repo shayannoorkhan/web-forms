@@ -3,6 +3,7 @@ import { Modal, Select, Input, Button, message, DatePicker, Checkbox } from 'ant
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { baseUrl } from '../helper';
+import dayjs from 'dayjs';
 
 const Form4_6 = ({ open, setOpen, data, getFormData }) => {
     const param = useParams()
@@ -36,8 +37,8 @@ const Form4_6 = ({ open, setOpen, data, getFormData }) => {
                 message.success('Record Added')
                 getFormData()
                 setLoading(false)
-                setOpen(false)
                 formData({})
+                setOpen(false)
             })
     }
 
@@ -48,13 +49,13 @@ const Form4_6 = ({ open, setOpen, data, getFormData }) => {
                 message.success('Record Updated')
                 getFormData()
                 setLoading(false)
-                setOpen(false)
                 formData({})
+                setOpen(false)
             })
     }
 
     return (
-        <Modal centered className='form-30' open={open} style={{ width: '35%' }} onCancel={() => setOpen(false)} title='Add New Record' footer={[
+        <Modal centered className='form-30' open={open} style={{ width: '35%' }} onCancel={() => setOpen(false)} title={formData?.row_id ? 'Edit Record' : 'Add New Record'} footer={[
             <>
                 <Button loading={loading} disabled={loading} onClick={formData?.row_id ? edit : addRecord} className="form-button">
                     Save
@@ -63,7 +64,7 @@ const Form4_6 = ({ open, setOpen, data, getFormData }) => {
         ]}>
             <div className='mb-3'>
                 <p>Date Received:</p>
-                <DatePicker onChange={handleDate} className="w-100" />
+                <DatePicker onChange={handleDate} className="w-100" value={formData?.Date_Received && dayjs(formData?.Date_Received)} />
             </div>
             <div className='mb-3'>
                 <p>Comments Received:</p>
