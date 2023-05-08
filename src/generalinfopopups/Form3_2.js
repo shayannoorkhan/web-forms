@@ -25,7 +25,7 @@ const Form3_2 = ({ open, setOpen, data, getFormData }) => {
     }
 
     function handleLastUpdateDate(date, dateString) {
-        handleFormData('Last_Status_Update_Date:', dateString)
+        handleFormData('Last_Status_Update_Date', dateString)
     }
 
     function handlesmc2Date(date, dateString) {
@@ -42,7 +42,6 @@ const Form3_2 = ({ open, setOpen, data, getFormData }) => {
             .then((resp) => {
                 message.success('Record Added')
                 getFormData()
-                formData({})
                 setLoading(false)
                 setOpen(false)
             })
@@ -59,7 +58,6 @@ const Form3_2 = ({ open, setOpen, data, getFormData }) => {
             .then((resp) => {
                 message.success('Record Updated')
                 getFormData()
-                formData({})
                 setLoading(false)
                 setOpen(false)
             })

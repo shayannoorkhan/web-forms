@@ -152,7 +152,7 @@ const GeneralInfo = ({ form, index, date }) => {
                     </div>
                     <div className='mt-3'>
                         <p>Next Assessment Date:</p>
-                        <Input placeholder='Next Assessment Date' value={form['Next Assessment Date']} readOnly />
+                        <Input placeholder='Next Assessment Date' value={form?.['Next Assessment Date'] ? moment(form['Next Assessment Date']).format('YYYY-MM-DD') : '-'} readOnly />
                     </div>
                 </div>
                 <div className='mt-5' style={{ textAlign: "end" }}>

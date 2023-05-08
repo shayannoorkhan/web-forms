@@ -638,7 +638,7 @@ const FormDetails = () => {
                                     return (
                                         <tr>
                                             <td>{data?.Re_Evaluation_Status}</td>
-                                            <td>{moment(data?.Last_Status_Update_Date).format('YYYY-MM-DD')}</td>
+                                            <td>{data?.Last_Status_Update_Date ? moment(data?.Last_Status_Update_Date).format('YYYY-MM-DD') : '-'}</td>
                                             <td>{data?.Re_Evaluation_Submission_Number}</td>
                                             <td>{data?.Re_Evaluation_Submission_Category}</td>
                                             <td>{data?.Re_Evaluation_Submission_Type}</td>
@@ -646,11 +646,11 @@ const FormDetails = () => {
                                             <td>{data?.Category}</td>
                                             <td>{data?.Associated_Publication_PRVD}</td>
                                             <td>{data?.PMRA_Number_PRVD}</td>
-                                            <td>{moment(data?.Date_of_SMC2_BN_for_PRVD).format('YYYY-MM-DD')}</td>
+                                            <td>{data?.Date_of_SMC2_BN_for_PRVD ? moment(data?.Date_of_SMC2_BN_for_PRVD).format('YYYY-MM-DD') : '-'}</td>
                                             <td>{data?.PMRA_Number_SMC2_PRVD}</td>
                                             <td>{data?.Associated_Publication_RVD}</td>
                                             <td>{data?.PMRA_Number_RVD}</td>
-                                            <td>{moment(data?.Date_of_SMC2_BN_for_RVD).format('YYYY-MM-DD')}</td>
+                                            <td>{data?.Date_of_SMC2_BN_for_RVD ? moment(data?.Date_of_SMC2_BN_for_RVD).format('YYYY-MM-DD') : '-'}</td>
                                             <td>{data?.PMRA_Number_SMC2_RVD}</td>
                                             <td><Button className='form-button' onClick={() => { setForm32(true); setFormProp(data) }}>Edit</Button></td>
                                             <td><Button className='form-button' onClick={() => deleteForm3Data(data.row_id)}>Delete</Button></td>
@@ -694,7 +694,7 @@ const FormDetails = () => {
                                     return (
                                         <tr>
                                             <td>{data?.Special_Review_Status_Status}</td>
-                                            <td>{moment(data?.Special_Review_Last_Status_Update_Date).format('YYYY-MM-DD')}</td>
+                                            <td>{data?.Special_Review_Last_Status_Update_Date ? moment(data?.Special_Review_Last_Status_Update_Date).format('YYYY-MM-DD') : '-'}</td>
                                             <td>{data?.Special_Review_Submission_Number}</td>
                                             <td>{data?.Special_Review_Submission_Category}</td>
                                             <td>{data?.Special_Review_Submission_Type}</td>
@@ -702,11 +702,11 @@ const FormDetails = () => {
                                             <td>{data?.Trigger}</td>
                                             <td>{data?.Associated_Publication_PSR}</td>
                                             <td>{data?.PMRA_Number_PSR}</td>
-                                            <td>{moment(data?.Date_of_SMC2_BN_for_PSR).format('YYYY-MM-DD')}</td>
+                                            <td>{data?.Date_of_SMC2_BN_for_PSR ? moment(data?.Date_of_SMC2_BN_for_PSR).format('YYYY-MM-DD') : '-'}</td>
                                             <td>{data?.PMRA_Number_SMC2_PSR}</td>
                                             <td>{data?.Associated_Publication_SRD}</td>
                                             <td>{data?.PMRA_Number_SMC2_SRD}</td>
-                                            <td>{moment(data?.Date_of_SMC2_BN_for_SRD).format('YYYY-MM-DD')}</td>
+                                            <td>{data?.Date_of_SMC2_BN_for_SRD ? moment(data?.Date_of_SMC2_BN_for_SRD).format('YYYY-MM-DD') : '-'}</td>
                                             <td><Button className='form-button' onClick={() => { setForm33(true); setFormProp(data) }}>Edit</Button></td>
                                             <td><Button className='form-button' onClick={() => deleteForm3Data(data.row_id)}>Delete</Button></td>
                                         </tr>
@@ -749,7 +749,7 @@ const FormDetails = () => {
                                             <td>{data?.Registrant_Assigned_Code}</td>
                                             <td>{data?.Registrant_Assigned_Number}</td>
                                             <td>{data?.Registration_Number}</td>
-                                            <td>{moment(data?.Date_First_Registered).format('YYYY-MM-DD')}</td>
+                                            <td>{data?.Date_First_Registered ? moment(data?.Date_First_Registered).format('YYYY-MM-DD') : '-'}</td>
                                             <td>{data?.Initial_Submission_Category}</td>
                                             <td>{data?.Initial_Submission_Type}</td>
                                             <td>{data?.USC_List}</td>
@@ -789,7 +789,7 @@ const FormDetails = () => {
                                         <tr>
                                             <td>{data?.Regulator}</td>
                                             <td>{data?.Status_of_Active_Ingredient}</td>
-                                            <td>{moment(data?.Status_date).format('DD-MM-YYYY')}</td>
+                                            <td>{data?.Status_date ? moment(data?.Status_date).format('DD-MM-YYYY') : '-'}</td>
                                             <td>{data?.Comments}</td>
                                             <td><Button className='form-button' onClick={() => { setForm35(true); setFormProp(data) }}>Edit</Button></td>
                                             <td><Button className='form-button' onClick={() => deleteForm3_5Data(data.row_id)}>Delete</Button></td>
@@ -911,7 +911,7 @@ const FormDetails = () => {
                                         <tr>
                                             <td>{data?.Sector}</td>
                                             <td>{data?.PCPA_Contravention}</td>
-                                            <td>{moment(data?.Date_Of_Reported_Contravention).format('DD-MM-YYYY')}</td>
+                                            <td>{data?.Date_Of_Reported_Contravention ? moment(data?.Date_Of_Reported_Contravention).format('DD-MM-YYYY') : '-'}</td>
                                             <td>{data?.Product_Description_At_Time_Of_Contravention}</td>
                                             <td>{data?.Corrective_Action_Taken}</td>
                                             <td>{data?.Compliance_Status_Of_Registrant_At_Time_Of_Contravention}</td>
@@ -946,7 +946,7 @@ const FormDetails = () => {
                                 form4_6Data?.map(data => {
                                     return (
                                         <tr>
-                                            <td>{moment(data?.Date_Received).format('DD-MM-YYYY')}</td>
+                                            <td>{data?.Date_Received ? moment(data?.Date_Received).format('DD-MM-YYYY') : '-'}</td>
                                             <td>{data?.Comments_Received}</td>
                                             <td><Button className='form-button' onClick={() => { setForm46(true); setFormProp(data) }}>Edit</Button></td>
                                             <td><Button className='form-button' onClick={() => deleteForm4_6Data(data.row_id)}>Delete</Button></td>
@@ -987,7 +987,7 @@ const FormDetails = () => {
                                             <td>{data?.TGAI_EP_MA}</td>
                                             <td>{data?.Registration_Number}</td>
                                             <td>{data?.PMRA_Number}</td>
-                                            <td>{moment(data?.Due_date).format('DD-MM-YYYY')}</td>
+                                            <td>{data?.Due_date ? moment(data?.Due_date).format('DD-MM-YYYY') : '-'}</td>
                                             <td>{data?.DACO_Number}</td>
                                             <td>{data?.Unfulfilled_Requirements}</td>
                                             <td><Button className='form-button' onClick={() => { setForm47(true); setFormProp(data) }}>Edit</Button></td>

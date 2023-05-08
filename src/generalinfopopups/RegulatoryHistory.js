@@ -76,11 +76,11 @@ const RegulatoryHistory = ({ open, setOpen, data, getFormData }) => {
         ]}>
             <div className='mb-3'>
                 <p>First Registered Date:</p>
-                <DatePicker onChange={handleRegisteredDate} value={dayjs(formData?.First_Registered_Date).format('YYYY-MM-DD')} className="w-100" />
+                <DatePicker onChange={handleRegisteredDate} value={formData?.First_Registered_Date && dayjs(formData?.First_Registered_Date)} className="w-100" />
             </div>
             <div className='mb-3'>
-                <p>First Registration Submission Number::</p>
-                <Input placeholder='First Registration Submission Number:' className='mb-3' value={formData?.First_Registration_Submission_Number} onChange={(e) => handleFormData('First_Registration_Submission_Number', e.target.value)} />
+                <p>First Registration Submission Number:</p>
+                <Input placeholder='First Registration Submission Number' className='mb-3' value={formData?.First_Registration_Submission_Number} onChange={(e) => handleFormData('First_Registration_Submission_Number', e.target.value)} />
             </div>
             <div className='mb-3'>
                 <p>First Registration Submission Type:</p>
@@ -111,7 +111,7 @@ const RegulatoryHistory = ({ open, setOpen, data, getFormData }) => {
             </div>
             <div className='mb-3'>
                 <p>Date of SMC2 BN for RDD:</p>
-                <DatePicker onChange={handlesmc2Date} className="w-100" value={dayjs(formData?.Date_of_SMC2_BN_for_RDD).format('YYYY-MM-DD')} />
+                <DatePicker onChange={handlesmc2Date} className="w-100" value={formData?.Date_of_SMC2_BN_for_RDD && dayjs(formData?.Date_of_SMC2_BN_for_RDD)} />
             </div>
         </Modal>
     )
